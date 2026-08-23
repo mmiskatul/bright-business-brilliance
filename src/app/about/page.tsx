@@ -58,8 +58,8 @@ export default function AboutPage() {
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft">
             <img
-              src="/assets/jersey-craft.jpg"
-              alt="Apparel manufacturing and precision stitching in Dhaka studio"
+              src="/assets/jersey-matchday.jpg"
+              alt="ASFA Design premium football kit manufacturing in Dhaka studio"
               width={1200}
               height={900}
               className="w-full h-full object-cover aspect-[4/3]"
@@ -170,8 +170,8 @@ export default function AboutPage() {
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft">
             <img
-              src="/assets/jersey-box.jpg"
-              alt="Luxury presentation gift box with folded football jersey and tags"
+              src="/assets/jersey-madrid.jpg"
+              alt="ASFA Design matchday football jersey craftsmanship and packaging"
               width={1200}
               height={900}
               className="w-full h-full object-cover aspect-[4/3]"
