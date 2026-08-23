@@ -128,60 +128,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 01 Introduction — Workshop & Craftsmanship */}
-      <Section tone="alt" bordered>
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <SectionHeading
-              eyebrow="01 — The Workshop"
-              title="Tailored with athlete-level precision"
-              description="ASFA Design is built around the passion for authentic football culture. Every jersey is constructed using high-density jacquard knitting, reinforced double-needle seams, and Japanese sublimation ink for vibrant, long-lasting colors."
-            />
-            <div className="mt-6 space-y-3">
-              {[
-                "Direct industrial embroidery and heat-sealed silicone club crests",
-                "Laser-cut perforated side vents for maximum matchday ventilation",
-                "Free personalized name and squad number printing with official fonts",
-                "Custom batch manufacturing for teams, universities, and corporate leagues",
-              ].map((point) => (
-                <div key={point} className="flex items-center gap-3 text-sm text-neutral-700">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0" />
-                  <span>{point}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8 flex gap-3">
-              <ButtonLink href="/about" variant="outline">
-                Read About Our Craft
-              </ButtonLink>
-              <a
-                href={business.whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Ask on WhatsApp
-              </a>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft">
-            <img
-              src="/assets/jersey-craft.jpg"
-              alt="Apparel manufacturing and precision stitching in Dhaka studio"
-              width={1200}
-              height={900}
-              className="w-full h-full object-cover aspect-[4/3]"
-            />
-          </div>
-        </div>
-      </Section>
-
-      {/* 02 Featured Jerseys */}
+      {/* 01 Featured Jerseys */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
           <SectionHeading
-            eyebrow="02 — Featured Kits"
+            eyebrow="01 — Featured Kits"
             title="Popular Matchday Jerseys"
             description="Our highest-rated player edition and fan edition jerseys ready for immediate dispatch across Bangladesh."
           />
@@ -257,10 +208,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 03 Why Choose Us */}
+      {/* 02 Why Choose Us */}
       <Section tone="alt" bordered>
         <SectionHeading
-          eyebrow="03 — Quality Guarantee"
+          eyebrow="02 — Quality Guarantee"
           title="Why Football Fans & Teams Trust ASFA"
           align="center"
         />
@@ -282,7 +233,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 04 Featured Experience / Fabric & Tech */}
+      {/* 03 Featured Experience / Fabric & Tech */}
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft lg:order-2">
@@ -296,7 +247,7 @@ export default function HomePage() {
           </div>
           <div>
             <SectionHeading
-              eyebrow="04 — Engineered Performance"
+              eyebrow="03 — Engineered Performance"
               title="Breathable fabric crafted for Dhaka's climate"
               description="Standard polyester jerseys trap heat and sweat. ASFA jerseys use specialized micro-mesh hexagonal knitting that pulls moisture away from the skin within seconds."
             />
@@ -337,11 +288,11 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 05 Customer Reviews Preview */}
+      {/* 04 Customer Reviews Preview */}
       <Section tone="alt" bordered>
         <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
           <SectionHeading
-            eyebrow="05 — Customer Proof"
+            eyebrow="04 — Customer Proof"
             title="What Footballers & Fans Say in Dhaka"
             description="Verified reviews from tournament captains, kit collectors, and football supporters across Bangladesh."
           />
