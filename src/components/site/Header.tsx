@@ -44,21 +44,18 @@ export function Header() {
         </Link>
 
         {/* Center: Desktop Navigation */}
-        <nav aria-label="Main" className="hidden items-center gap-7 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
           {nav.map((item) => {
             const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
             return (
               <Link
                 key={item.to}
                 href={item.to}
-                className={`relative py-1 text-[11px] font-bold uppercase tracking-wider transition-colors hover:text-neutral-900 ${
-                  isActive ? "text-emerald-700 font-extrabold" : "text-neutral-500"
+                className={`relative py-1 text-xs font-mono font-medium transition-colors hover:text-neutral-900 ${
+                  isActive ? "text-neutral-900 font-bold" : "text-neutral-600"
                 }`}
               >
                 {item.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-emerald-600" />
-                )}
               </Link>
             );
           })}
@@ -107,10 +104,10 @@ export function Header() {
                   <Link
                     href={item.to}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-md px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
+                    className={`block rounded-md px-3 py-2 text-xs font-mono font-medium transition-colors ${
                       isActive
-                        ? "bg-emerald-50 text-emerald-800 font-bold"
-                        : "text-neutral-700 hover:bg-neutral-100"
+                        ? "bg-neutral-100 text-neutral-900 font-bold"
+                        : "text-neutral-700 hover:bg-neutral-50"
                     }`}
                   >
                     {item.label}
