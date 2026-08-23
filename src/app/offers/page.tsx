@@ -110,7 +110,7 @@ export default function OffersPage() {
                     </p>
 
                     <Link
-                      href={`/contact?offer=${encodeURIComponent(offer.title)}&code=${offer.code}`}
+                      href="/products"
                       className={`w-full inline-flex items-center justify-center gap-1.5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider shadow-2xs transition-all ${
                         isMiddleCard
                           ? "bg-black text-white hover:bg-neutral-800"
@@ -147,7 +147,7 @@ export default function OffersPage() {
 
           <div className="mt-6 flex justify-center">
             <Link
-              href="/contact?type=bulk"
+              href="/custom"
               className="inline-flex items-center justify-center bg-black hover:bg-neutral-800 text-white font-mono text-xs font-bold uppercase tracking-wider py-3 px-6 shadow-2xs transition-colors"
             >
               REQUEST SQUAD BULK QUOTE

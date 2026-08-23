@@ -23,7 +23,13 @@ interface CartContextType {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
-  addItem: (item: Omit<CartItem, "id" | "quantity">) => void;
+  addItem: (
+    item: Omit<CartItem, "id" | "quantity">,
+    quantityToAdd?: number,
+    silent?: boolean,
+  ) => void;
+  buySingleItem: (item: Omit<CartItem, "id" | "quantity">, quantity?: number) => void;
+  checkoutSingleItem: (id: string) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
@@ -34,30 +40,6 @@ interface CartContextType {
 }
 
 const FREE_SHIPPING_THRESHOLD = 5000;
-
-// Initial starter items matching the user's reference screenshot
-const INITIAL_ITEMS: CartItem[] = [
-  {
-    id: "argentina-polo-l",
-    slug: "asfa-argentina-messi-tribute-champions-polo",
-    name: "ASFA Argentina 3-Star World Champions Tribute Polo",
-    price: 1650,
-    priceFormatted: "৳1,650",
-    size: "L",
-    image: "/assets/products/asfa-argentina-polo.png",
-    quantity: 1,
-  },
-  {
-    id: "falcon-jr-m",
-    slug: "asfa-falcon-jr-miami-splash-kit",
-    name: "ASFA FALCON JR Miami Splash Custom Full Kit",
-    price: 1750,
-    priceFormatted: "৳1,750",
-    size: "M",
-    image: "/assets/products/asfa-falcon-jr-full-set.png",
-    quantity: 1,
-  },
-];
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -72,10 +54,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (saved) {
         setItems(JSON.parse(saved));
       } else {
-        setItems(INITIAL_ITEMS);
+        setItems([]);
       }
     } catch {
-      setItems(INITIAL_ITEMS);
+      setItems([]);
     }
     setIsLoaded(true);
   }, []);
@@ -94,19 +76,44 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const closeCart = () => setIsOpen(false);
   const toggleCart = () => setIsOpen((prev) => !prev);
 
-  const addItem = (itemData: Omit<CartItem, "id" | "quantity">) => {
+  const addItem = (
+    itemData: Omit<CartItem, "id" | "quantity">,
+    quantityToAdd = 1,
+    silent = false,
+  ) => {
     const id = `${itemData.slug}-${itemData.size}-${itemData.customName || ""}-${itemData.customNumber || ""}`;
     setItems((prev) => {
       const existing = prev.find((i) => i.id === id);
       if (existing) {
-        return prev.map((i) => (i.id === id ? { ...i, quantity: i.quantity + 1 } : i));
+        return prev.map((i) => (i.id === id ? { ...i, quantity: i.quantity + quantityToAdd } : i));
       }
-      return [...prev, { ...itemData, id, quantity: 1 }];
+      return [...prev, { ...itemData, id, quantity: quantityToAdd }];
     });
-    toast.success("Added to Cart", {
-      description: `${itemData.name} (${itemData.size}) added to your equipment bag.`,
-    });
-    setIsOpen(true);
+
+    if (!silent) {
+      toast.success("Added to Cart", {
+        description: `${itemData.name} (${itemData.size}) added to your equipment bag.`,
+      });
+      setIsOpen(true);
+    }
+  };
+
+  // Direct Buy only this single product (sets cart to only this product)
+  const buySingleItem = (itemData: Omit<CartItem, "id" | "quantity">, quantity = 1) => {
+    const id = `${itemData.slug}-${itemData.size}-${itemData.customName || ""}-${itemData.customNumber || ""}`;
+    const singleItem: CartItem = {
+      ...itemData,
+      id,
+      quantity,
+    };
+    setItems([singleItem]);
+    setIsOpen(false);
+  };
+
+  // Isolate a specific item in cart for single checkout
+  const checkoutSingleItem = (id: string) => {
+    setItems((prev) => prev.filter((it) => it.id === id));
+    setIsOpen(false);
   };
 
   const removeItem = (id: string) => {
@@ -144,6 +151,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         closeCart,
         toggleCart,
         addItem,
+        buySingleItem,
+        checkoutSingleItem,
         removeItem,
         updateQuantity,
         clearCart,

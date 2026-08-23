@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, ShoppingBag } from "lucide-react";
+import { Search, ShoppingBag } from "lucide-react";
 import { products } from "@/data/products";
+import { ProductCard } from "@/components/site/ProductCard";
 
 const categories = ["All", "Club Kits", "National Kits", "Retro Classics", "Custom Teamwear"];
 
@@ -104,76 +105,7 @@ export default function ProductsPage() {
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.map((product) => (
-                <Link
-                  key={product.slug}
-                  href={`/products/${product.slug}`}
-                  className="group flex flex-col overflow-hidden border border-neutral-300 bg-white transition-colors duration-200 hover:border-neutral-400"
-                >
-                  {/* Image Container */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-3">
-                    <img
-                      src={product.image}
-                      alt={product.imageAlt}
-                      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {product.badge && (
-                      <span className="absolute top-2.5 left-2.5 border border-neutral-300 bg-white/95 px-2 py-0.5 text-[10px] font-mono font-bold text-neutral-800 shadow-2xs">
-                        {product.badge}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Body */}
-                  <div className="flex flex-1 flex-col p-4 sm:p-5">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700">
-                      {product.category}
-                    </span>
-
-                    <h2 className="mt-1 text-sm sm:text-base font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                      {product.name}
-                    </h2>
-
-                    <p className="mt-2 flex-1 text-xs leading-relaxed text-neutral-600 line-clamp-2">
-                      {product.summary}
-                    </p>
-
-                    {/* Sizes Row */}
-                    <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3 text-[11px] font-mono">
-                      <span className="text-neutral-500">Sizes Available:</span>
-                      <div className="flex gap-1">
-                        {["S", "M", "L", "XL", "XXL"].map((size) => {
-                          const isAvailable = product.sizes.includes(size);
-                          const isFeatured = size === "L" || size === "M";
-                          return (
-                            <span
-                              key={size}
-                              className={`flex h-5 w-5 items-center justify-center border text-[9px] font-bold ${
-                                isAvailable && isFeatured
-                                  ? "border-black bg-black text-white"
-                                  : isAvailable
-                                    ? "border-neutral-300 bg-neutral-50 text-neutral-800"
-                                    : "border-neutral-200 bg-neutral-100 text-neutral-300 opacity-40"
-                              }`}
-                            >
-                              {size}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Price & View Details */}
-                    <div className="mt-3 flex items-center justify-between border-t border-neutral-100 pt-3">
-                      <span className="font-display text-base font-black text-neutral-900">
-                        {product.price}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 group-hover:text-emerald-800 font-mono">
-                        View Details
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard key={product.slug} product={product} />
               ))}
             </div>
           )}
@@ -193,7 +125,7 @@ export default function ProductsPage() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
-              href="/contact"
+              href="/custom"
               className="inline-flex items-center rounded-none sm:rounded-xs bg-black px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-xs hover:bg-neutral-800 transition-colors font-mono"
             >
               Request Custom Squad Quote

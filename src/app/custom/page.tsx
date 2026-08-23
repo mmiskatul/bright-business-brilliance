@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { MessageSquare, PenTool, Layers, Truck, CheckCircle2, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { MessageSquare, PenTool, Layers, Truck, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
 const processSteps = [
@@ -50,7 +50,7 @@ export default function CustomPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.organization || !form.contactName || !form.email) {
-      toast.error("Please fill in the required fields");
+      toast.error("Please fill in all required fields.");
       return;
     }
 
@@ -60,19 +60,26 @@ export default function CustomPage() {
     });
   };
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="bg-white text-neutral-900">
-      {/* ─── Hero Section ───────────────────────────────────────── */}
-      <section className="py-12 sm:py-16 lg:py-20 border-b border-neutral-200/90">
+    <div className="bg-white text-neutral-900 selection:bg-neutral-900 selection:text-white">
+      {/* ─── SECTION 1: HERO ────────────────────────────────────── */}
+      <section className="py-12 sm:py-16 lg:py-24 border-b border-neutral-100">
         <div className="container-page max-w-6xl">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-            {/* Left: Headline & CTAs */}
-            <div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-3">
-                — B2B & BULK ORDERS
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* Left: Content */}
+            <div className="flex flex-col items-start">
+              <span className="text-[11px] font-mono font-medium uppercase tracking-[0.2em] text-neutral-400 block mb-3">
+                — B2B &amp; BULK ORDERS
               </span>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-neutral-900 leading-[1.05] tracking-tight uppercase">
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase">
                 PRO-GRADE
                 <br />
                 CUSTOM
@@ -80,42 +87,48 @@ export default function CustomPage() {
                 TEAMWEAR
               </h1>
 
-              <p className="mt-5 text-xs sm:text-sm leading-relaxed text-neutral-600 max-w-lg font-normal">
+              <p className="mt-6 max-w-lg text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal">
                 Engineered for elite performance and cohesive identity. Outfit your club, academy,
                 or corporate team with precision-manufactured technical apparel designed to dominate
                 the pitch.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
-                  href="#quote-form"
-                  className="inline-flex items-center justify-center bg-[#047857] hover:bg-[#065F46] text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-6 shadow-xs transition-colors"
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection("quote-form")}
+                  className="inline-flex items-center justify-center bg-[#047857] hover:bg-[#065f46] text-white font-mono text-[11px] font-bold uppercase tracking-wider py-3.5 px-6 shadow-2xs transition-colors cursor-pointer"
                 >
                   REQUEST A BULK QUOTE
-                </a>
-                <a
-                  href="#process"
-                  className="inline-flex items-center justify-center border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-900 font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-6 shadow-2xs transition-colors"
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => scrollToSection("process")}
+                  className="inline-flex items-center justify-center border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 font-mono text-[11px] font-bold uppercase tracking-wider py-3.5 px-6 shadow-2xs transition-colors cursor-pointer"
                 >
                   VIEW PROCESS
-                </a>
+                </button>
               </div>
             </div>
 
-            {/* Right: Team Showcase Photo */}
-            <div className="relative overflow-hidden border border-neutral-300 bg-[#EFEFEF] shadow-soft aspect-[4/3] lg:aspect-[3/4]">
+            {/* Right: Pro Squad Image */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
               <img
-                src="/assets/jersey-matchday.jpg"
-                alt="Pro-grade custom football teamwear and squad matchday apparel"
-                className="h-full w-full object-cover"
+                src="/assets/jersey-hero.jpg"
+                alt="ASFA Design professional athletes in custom pro-grade teamwear"
+                className="h-full w-full object-cover object-center"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── 02. The Engineered Process ─────────────────────────── */}
-      <section id="process" className="py-14 sm:py-20 bg-white border-b border-neutral-200/90">
+      {/* ─── SECTION 2: THE ENGINEERED PROCESS ─────────────────── */}
+      <section
+        id="process"
+        className="py-16 sm:py-20 lg:py-24 border-b border-neutral-100 bg-white"
+      >
         <div className="container-page max-w-6xl">
           <div>
             <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight uppercase">
@@ -128,23 +141,25 @@ export default function CustomPage() {
           </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {processSteps.map((step) => {
-              const Icon = step.icon;
+            {processSteps.map((item) => {
+              const Icon = item.icon;
               return (
                 <div
-                  key={step.step}
-                  className="flex flex-col justify-between border border-neutral-200 bg-white p-6 shadow-2xs transition-all hover:border-neutral-400"
+                  key={item.step}
+                  className="flex flex-col justify-between border border-neutral-200 bg-white p-6 transition-all hover:border-neutral-300 hover:shadow-2xs"
                 >
                   <div>
-                    <span className="text-xs font-mono font-bold text-neutral-400 block mb-4">
-                      {step.step}
+                    <span className="text-[11px] font-mono text-neutral-400 block mb-4">
+                      {item.step}
                     </span>
-                    <Icon className="h-5 w-5 text-neutral-900 mb-4" strokeWidth={1.75} />
-                    <h3 className="text-sm font-bold text-neutral-900 font-mono">{step.title}</h3>
-                    <p className="mt-2 text-xs text-neutral-600 leading-relaxed font-normal">
-                      {step.description}
-                    </p>
+                    <div className="text-neutral-900 mb-4">
+                      <Icon className="h-5 w-5" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="text-sm font-bold text-neutral-900 tracking-tight mb-2">
+                      {item.title}
+                    </h3>
                   </div>
+                  <p className="text-xs text-neutral-500 leading-relaxed">{item.description}</p>
                 </div>
               );
             })}
@@ -152,8 +167,8 @@ export default function CustomPage() {
         </div>
       </section>
 
-      {/* ─── 03. Levels of Customization ────────────────────────── */}
-      <section className="py-14 sm:py-20 bg-white border-b border-neutral-200/90">
+      {/* ─── SECTION 3: LEVELS OF CUSTOMIZATION ─────────────────── */}
+      <section className="py-16 sm:py-20 lg:py-24 border-b border-neutral-100 bg-white">
         <div className="container-page max-w-6xl">
           <div>
             <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight uppercase">
@@ -165,64 +180,68 @@ export default function CustomPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {/* Left Tall Card: Sublimation */}
-            <div className="relative overflow-hidden border border-neutral-300 bg-neutral-900 min-h-[380px] lg:min-h-[440px] flex flex-col justify-end p-6 sm:p-8">
+          <div className="mt-10 grid gap-6 lg:grid-cols-12">
+            {/* Left Big Card: Basic Sublimation */}
+            <div className="relative overflow-hidden border border-neutral-200 bg-neutral-900 lg:col-span-7 min-h-[380px] sm:min-h-[440px] flex flex-col justify-end p-6 sm:p-8 group">
               <img
                 src="/assets/jersey-custom.jpg"
-                alt="Full garment sublimation pattern and micro-mesh graphics"
-                className="absolute inset-0 h-full w-full object-cover opacity-60"
+                alt="Basic Sublimation Fabric Detail"
+                className="absolute inset-0 h-full w-full object-cover object-center opacity-85 transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
 
-              <div className="relative z-10 space-y-2">
-                <span className="inline-block bg-[#047857] px-2.5 py-0.5 text-[9px] font-mono font-bold uppercase tracking-wider text-white shadow-2xs">
-                  FULL SUBLIMATION
+              <div className="relative z-10">
+                <span className="inline-block rounded bg-emerald-600/90 px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-wider text-white mb-2.5">
+                  BASE TIER
                 </span>
-                <h3 className="text-lg sm:text-xl font-bold text-white leading-snug">
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                   Basic Sublimation
                 </h3>
-                <p className="text-xs text-neutral-300 leading-relaxed max-w-md">
-                  Lightweight, integrated graphics that never crack or fade. Ideal for full garment
+                <p className="mt-2 text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-lg">
+                  Lightweight, integrated graphics that never crack or fade. Ideal for full-garment
                   complex patterns and high-friction contact sports where minimizing weight is
                   paramount.
                 </p>
               </div>
             </div>
 
-            {/* Right Stacked Cards: Embroidery & Badges */}
-            <div className="grid gap-6">
-              {/* Top: Premium Embroidery */}
-              <div className="relative overflow-hidden border border-neutral-300 bg-neutral-900 min-h-[190px] flex flex-col justify-end p-6">
+            {/* Right Column: 2 Stacked Cards */}
+            <div className="grid gap-6 lg:col-span-5">
+              {/* Right Top Card: Premium Embroidery */}
+              <div className="relative overflow-hidden border border-neutral-200 bg-neutral-900 min-h-[200px] flex flex-col justify-end p-6 group">
                 <img
                   src="/assets/jersey-printing.jpg"
-                  alt="High density embroidery on sports teamwear"
-                  className="absolute inset-0 h-full w-full object-cover opacity-50"
+                  alt="Premium Embroidery Machinery"
+                  className="absolute inset-0 h-full w-full object-cover object-center opacity-75 transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
-                <div className="relative z-10 space-y-1.5">
-                  <h3 className="text-base font-bold text-white">Premium Embroidery</h3>
-                  <p className="text-xs text-neutral-300 leading-relaxed">
-                    Tactile, dimensional crests and badges offering a classic, authoritative
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                    Premium Embroidery
+                  </h3>
+                  <p className="mt-1.5 text-xs text-neutral-300 leading-relaxed">
+                    Tactile, dimensional crests and logos offering a classic, authoritative
                     aesthetic. Recommended for presentation jackets and staff apparel.
                   </p>
                 </div>
               </div>
 
-              {/* Bottom: Custom Badges */}
-              <div className="relative overflow-hidden border border-neutral-300 bg-neutral-900 min-h-[190px] flex flex-col justify-end p-6">
+              {/* Right Bottom Card: Custom Badges */}
+              <div className="relative overflow-hidden border border-neutral-200 bg-neutral-900 min-h-[200px] flex flex-col justify-end p-6 group">
                 <img
                   src="/assets/service-branding.jpg"
-                  alt="3D silicone and woven club badges"
-                  className="absolute inset-0 h-full w-full object-cover opacity-50"
+                  alt="Custom Silicone and TPU Badges Collection"
+                  className="absolute inset-0 h-full w-full object-cover object-center opacity-70 transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
-                <div className="relative z-10 space-y-1.5">
-                  <h3 className="text-base font-bold text-white">Custom Badges</h3>
-                  <p className="text-xs text-neutral-300 leading-relaxed">
-                    High fidelity woven, silicone, or TPU crests applied with heat sealing for
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                    Custom Badges
+                  </h3>
+                  <p className="mt-1.5 text-xs text-neutral-300 leading-relaxed">
+                    High-fidelity woven, silicone, or TPU crests applied with heat sealing for an
                     ultra-modern, lightweight dimensional finish.
                   </p>
                 </div>
@@ -232,30 +251,29 @@ export default function CustomPage() {
         </div>
       </section>
 
-      {/* ─── 04. Request a Bulk Quote ───────────────────────────── */}
-      <section id="quote-form" className="py-14 sm:py-20 bg-white">
+      {/* ─── SECTION 4: REQUEST A BULK QUOTE ────────────────────── */}
+      <section id="quote-form" className="py-16 sm:py-20 lg:py-24 bg-[#EFEFEF]">
         <div className="container-page max-w-6xl">
-          <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
-            {/* Left: Quote Form */}
-            <div>
+          <div className="grid gap-8 lg:grid-cols-2 bg-white border border-neutral-300 shadow-soft overflow-hidden">
+            {/* Left: Form */}
+            <div className="p-8 sm:p-10 lg:p-12">
               <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight uppercase">
                 REQUEST A BULK QUOTE
               </h2>
-              <p className="mt-2 text-xs sm:text-sm text-neutral-500 leading-relaxed">
+              <p className="mt-2 text-xs text-neutral-500 leading-relaxed">
                 Provide your initial requirements below. An ASFA Design B2B specialist will contact
                 you within 24 hours to commence the consultation process.
               </p>
 
               {submitted ? (
-                <div className="mt-8 border border-emerald-300 bg-emerald-50/50 p-6 space-y-3">
-                  <div className="flex items-center gap-2 text-emerald-700 font-mono text-sm font-bold">
+                <div className="mt-8 border border-emerald-300 bg-emerald-50/80 p-6 text-emerald-900">
+                  <div className="flex items-center gap-2 text-emerald-700 font-bold text-sm">
                     <CheckCircle2 className="h-5 w-5" />
-                    <span>Quote Request Received!</span>
+                    <span>Inquiry Received</span>
                   </div>
-                  <p className="text-xs text-neutral-700 font-mono leading-relaxed">
-                    Thank you, <strong>{form.contactName}</strong>. We have logged your request for{" "}
-                    <strong>{form.organization}</strong> ({form.quantity} for {form.sport}). Our
-                    team will review your specifications and email you at{" "}
+                  <p className="mt-2 text-xs text-neutral-700 leading-relaxed font-mono">
+                    Thank you, <strong>{form.contactName}</strong>. Our manufacturing team for{" "}
+                    <strong>{form.organization}</strong> will email you at{" "}
                     <strong>{form.email}</strong> shortly.
                   </p>
                   <button
@@ -271,13 +289,14 @@ export default function CustomPage() {
                         details: "",
                       });
                     }}
-                    className="mt-2 inline-flex items-center text-xs font-mono font-bold text-emerald-700 hover:underline cursor-pointer"
+                    className="mt-4 inline-flex items-center text-xs font-mono font-bold text-emerald-700 hover:underline cursor-pointer"
                   >
                     Submit another quote request →
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="mt-8 space-y-4 font-mono text-xs">
+                  {/* Row 1: Org & Contact */}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label
@@ -316,6 +335,7 @@ export default function CustomPage() {
                     </div>
                   </div>
 
+                  {/* Row 2: Email & Sport */}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label
@@ -346,7 +366,7 @@ export default function CustomPage() {
                         id="sport"
                         value={form.sport}
                         onChange={(e) => setForm({ ...form, sport: e.target.value })}
-                        className="w-full border border-neutral-300 bg-[#FAFAF8] px-3.5 py-2.5 text-xs text-neutral-900 outline-none focus:border-black focus:bg-white transition-colors"
+                        className="w-full border border-neutral-300 bg-[#FAFAF8] px-3.5 py-2.5 text-xs text-neutral-900 outline-none focus:border-black focus:bg-white transition-colors cursor-pointer"
                       >
                         <option value="Soccer / Football">Soccer / Football</option>
                         <option value="Cricket">Cricket</option>
@@ -357,6 +377,7 @@ export default function CustomPage() {
                     </div>
                   </div>
 
+                  {/* Row 3: Quantity */}
                   <div>
                     <label
                       htmlFor="quantity"
@@ -368,7 +389,7 @@ export default function CustomPage() {
                       id="quantity"
                       value={form.quantity}
                       onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                      className="w-full border border-neutral-300 bg-[#FAFAF8] px-3.5 py-2.5 text-xs text-neutral-900 outline-none focus:border-black focus:bg-white transition-colors"
+                      className="w-full border border-neutral-300 bg-[#FAFAF8] px-3.5 py-2.5 text-xs text-neutral-900 outline-none focus:border-black focus:bg-white transition-colors cursor-pointer"
                     >
                       <option value="10 – 49 Units">10 – 49 Units</option>
                       <option value="50 – 99 Units">50 – 99 Units</option>
@@ -377,6 +398,7 @@ export default function CustomPage() {
                     </select>
                   </div>
 
+                  {/* Row 4: Details */}
                   <div>
                     <label
                       htmlFor="details"
@@ -394,10 +416,11 @@ export default function CustomPage() {
                     />
                   </div>
 
+                  {/* Submit Button */}
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center bg-black hover:bg-neutral-800 text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-7 shadow-xs transition-colors cursor-pointer"
+                      className="inline-flex items-center justify-center bg-black hover:bg-neutral-800 text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-8 shadow-xs transition-colors cursor-pointer"
                     >
                       SUBMIT REQUEST
                     </button>
@@ -407,11 +430,11 @@ export default function CustomPage() {
             </div>
 
             {/* Right: Technical Specialist Photo */}
-            <div className="relative overflow-hidden border border-neutral-300 bg-[#EFEFEF] shadow-soft min-h-[380px] lg:min-h-full">
+            <div className="relative overflow-hidden bg-neutral-200 min-h-[360px] lg:min-h-full">
               <img
                 src="/assets/hero-workspace.jpg"
                 alt="ASFA Design apparel specialist reviewing specifications in Dhaka workshop"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-center"
               />
             </div>
           </div>

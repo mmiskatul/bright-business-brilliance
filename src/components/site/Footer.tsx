@@ -33,8 +33,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-emerald-700 transition-colors">
-                  Contact & Support
+                <Link href="/custom" className="hover:text-emerald-700 transition-colors">
+                  Custom Teamwear
                 </Link>
               </li>
               <li>
