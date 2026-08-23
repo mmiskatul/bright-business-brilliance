@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, ShoppingBag, MessageCircle, Phone } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { business, nav } from "@/data/site";
 import { Logo } from "./Logo";
 
@@ -21,47 +21,36 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-border/60 bg-white/95 backdrop-blur-md transition-all duration-200 ${
-        scrolled ? "shadow-sm border-border" : ""
+      className={`sticky top-0 z-50 border-b border-neutral-200/80 bg-white/95 backdrop-blur-md transition-all duration-200 ${
+        scrolled ? "shadow-xs border-neutral-300" : ""
       }`}
     >
-      {/* Top micro announcement bar */}
-      <div className="bg-emerald-50 border-b border-emerald-100/80 px-4 py-1.5 text-center text-xs font-medium text-emerald-900">
-        <span>
-          ⚡ Free Matchday Name & Number Customization on all kits this week! Nationwide Delivery 🇧🇩
-        </span>
-      </div>
-
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
+        {/* Left: Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-2.5 group"
           aria-label={`${business.name} — home`}
           onClick={() => setOpen(false)}
         >
-          <Logo className="h-9 w-11 transition-transform group-hover:scale-105" />
-          <div className="flex flex-col">
-            <span className="font-display text-lg sm:text-xl font-bold tracking-tight text-foreground">
-              {business.name}
-            </span>
-            <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground -mt-0.5">
-              Dhaka • Sportswear
-            </span>
-          </div>
+          <Logo className="h-7 w-8 transition-transform group-hover:scale-105" />
+          <span className="font-display text-base sm:text-lg font-black tracking-tight text-neutral-900 uppercase">
+            {business.name}
+          </span>
         </Link>
 
-        {/* Desktop navigation */}
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
+        {/* Center: Desktop navigation */}
+        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
           {nav.map((item) => {
             const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
             return (
               <Link
                 key={item.to}
                 href={item.to}
-                className={`text-sm font-medium transition-colors hover:text-emerald-700 ${
+                className={`text-xs font-bold uppercase tracking-wider transition-colors hover:text-emerald-700 ${
                   isActive
-                    ? "text-emerald-700 font-semibold underline underline-offset-8 decoration-2 decoration-emerald-600"
-                    : "text-muted-foreground"
+                    ? "text-emerald-700 underline underline-offset-8 decoration-2 decoration-emerald-600"
+                    : "text-neutral-600"
                 }`}
               >
                 {item.label}
@@ -70,34 +59,31 @@ export function Header() {
           })}
         </nav>
 
-        {/* Action Buttons */}
-        <div className="hidden sm:flex items-center gap-3">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 px-3.5 py-2 rounded-md transition-colors"
-          >
-            Catalog
-          </Link>
+        {/* Right: Cart / Order Bag */}
+        <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white shadow-soft transition-all hover:bg-emerald-800 hover:shadow-lift"
+            className="relative inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-neutral-100 transition-colors text-neutral-800"
+            aria-label="Order Cart"
           >
-            <ShoppingBag className="h-4 w-4" />
-            Order Jersey
+            <ShoppingBag className="h-5 w-5 text-neutral-800" />
+            <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-700 text-[10px] font-bold text-white shadow-xs">
+              0
+            </span>
           </Link>
-        </div>
 
-        {/* Mobile menu toggle */}
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground lg:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* Mobile menu toggle */}
+          <button
+            type="button"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 text-neutral-800 md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile navigation */}
@@ -105,7 +91,7 @@ export function Header() {
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="border-t border-border bg-white px-5 py-5 lg:hidden animate-in fade-in slide-in-from-top-2 shadow-lg"
+          className="border-t border-neutral-200 bg-white px-5 py-5 md:hidden animate-in fade-in slide-in-from-top-2 shadow-lg"
         >
           <ul className="flex flex-col space-y-1">
             {nav.map((item) => {
@@ -115,10 +101,10 @@ export function Header() {
                   <Link
                     href={item.to}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-md px-3 py-2.5 text-base font-medium transition-colors ${
+                    className={`block rounded-md px-3 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors ${
                       isActive
-                        ? "bg-emerald-50 text-emerald-800 font-semibold"
-                        : "text-foreground hover:bg-muted"
+                        ? "bg-emerald-50 text-emerald-800 font-bold"
+                        : "text-neutral-700 hover:bg-neutral-100"
                     }`}
                   >
                     {item.label}
@@ -128,20 +114,13 @@ export function Header() {
             })}
           </ul>
 
-          <div className="mt-4 flex flex-col gap-2 pt-2">
-            <Link
-              href="/products"
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-md bg-neutral-100 px-4 py-2.5 text-center text-sm font-medium text-neutral-900"
-            >
-              <ShoppingBag className="h-4 w-4" /> Explore Jersey Catalog
-            </Link>
+          <div className="mt-4 flex flex-col gap-2 pt-2 border-t border-neutral-100">
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="block rounded-md bg-emerald-700 px-4 py-2.5 text-center text-sm font-medium text-white shadow-soft"
+              className="block rounded-lg bg-emerald-700 px-4 py-2.5 text-center text-xs font-bold text-white shadow-sm"
             >
-              Order & Custom Teamwear Inquiry
+              Order & Teamwear Inquiry
             </Link>
           </div>
         </nav>
