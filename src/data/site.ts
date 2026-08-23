@@ -46,7 +46,7 @@ export interface Product {
 export const nav = [
   { to: "/", label: "Home" },
   { to: "/products", label: "Jerseys" },
-  { to: "/contact?type=custom", label: "Custom" },
+  { to: "/custom", label: "Custom" },
   { to: "/offers", label: "Kits" },
   { to: "/reviews", label: "Reviews" },
 ] as const;
