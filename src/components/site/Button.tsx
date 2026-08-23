@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
 const base =
@@ -16,10 +16,14 @@ export function ButtonLink({
   variant = "primary",
   children,
   className = "",
+  href,
   ...props
-}: { variant?: Variant; children: ReactNode; className?: string } & ComponentProps<typeof Link>) {
+}: { variant?: Variant; children: ReactNode; className?: string; href: string } & Omit<
+  ComponentProps<typeof Link>,
+  "href"
+>) {
   return (
-    <Link className={`${buttonStyles[variant]} ${className}`} {...props}>
+    <Link href={href} className={`${buttonStyles[variant]} ${className}`} {...props}>
       {children}
     </Link>
   );

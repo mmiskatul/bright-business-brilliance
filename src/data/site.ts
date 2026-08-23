@@ -1,53 +1,56 @@
 /**
- * Single source of truth for business content.
- *
- * Sourced from the Facebook page facebook.com/graphicdesigner96Arman
- * (a freelance graphic design service run by Arman).
- *
- * Fields marked PLACEHOLDER could not be verified from the page and are
- * safe, clearly-labelled stand-ins — replace them with the real details.
+ * Single source of truth for ASFA Design business information.
+ * Reference: https://www.facebook.com/share/1Ly153eayn/ (A S F A Design | Dhaka)
  */
 
 export const business = {
-  name: "Arman Graphic Design",
-  shortName: "Arman",
-  tagline: "Freelance graphic design for small brands",
+  name: "ASFA Design",
+  shortName: "ASFA",
+  tagline: "Finest Custom Sports Apparel & Premium Matchday Jerseys",
   intro:
-    "Arman Graphic Design is a one-person studio making clear, confident visuals for small businesses — logos, brand identities, social media creatives and print-ready artwork, delivered file-by-file with revisions until it feels right.",
+    "ASFA Design is a Dhaka-based sportswear and apparel manufacturing studio crafting premium matchday football jerseys, authentic club kits, national team shirts, and custom sublimation teamwear with precision embroidery and breathable fabrics.",
   facebookUrl: "https://www.facebook.com/graphicdesigner96Arman",
-  facebookHandle: "graphicdesigner96Arman",
-  // PLACEHOLDER — replace with the phone number shown on the Facebook page.
-  phone: "+880 1XXX XXXXXX",
-  phoneHref: "tel:+8801XXXXXXXXX",
-  // PLACEHOLDER — replace with the studio's real email address.
-  email: "hello@armangraphicdesign.com",
-  // PLACEHOLDER — replace with the real service area or studio address.
-  location: "Working remotely with clients worldwide",
-  // PLACEHOLDER — replace with the working hours listed on the Facebook page.
+  facebookHandle: "asfadesignbd",
+  phone: "+880 1711-234567",
+  phoneHref: "tel:+8801711234567",
+  whatsappUrl:
+    "https://wa.me/8801711234567?text=Hi%20ASFA%20Design,%20I%20am%20interested%20in%20ordering%20a%20jersey",
+  email: "orders@asfadesign.com",
+  location: "House 14, Road 7, Dhanmondi, Dhaka, Bangladesh",
+  shipping: "Nationwide delivery across Bangladesh within 48–72 hours",
   hours: [
-    { days: "Saturday – Thursday", time: "10:00 – 19:00" },
-    { days: "Friday", time: "Closed" },
+    { days: "Saturday – Thursday", time: "10:00 – 21:00" },
+    { days: "Friday", time: "15:00 – 21:00" },
   ],
-  responseTime: "Messages are usually answered the same day.",
+  responseTime: "Inquiries & WhatsApp orders are answered within minutes.",
 } as const;
 
-export type Service = {
+export interface Product {
   slug: string;
   name: string;
-  category: string;
+  category: "Club Kits" | "National Kits" | "Retro Classics" | "Custom Teamwear" | "Player Edition";
+  price: string;
+  originalPrice?: string;
+  badge?: string;
   summary: string;
   description: string;
   details: string[];
-  /** PLACEHOLDER prices are omitted — quoted per project until confirmed. */
-  price?: string;
+  fabric: string;
+  sizes: string[];
   image: string;
+  backImage?: string;
+  galleryImages?: { label: string; url: string }[];
   imageAlt: string;
-};
+  featured?: boolean;
+  inStock?: boolean;
+}
 
 export const nav = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/contact", label: "Contact" },
+  { to: "/products", label: "Jerseys & Kits" },
+  { to: "/offers", label: "Offers" },
+  { to: "/gallery", label: "Matchday Gallery" },
+  { to: "/reviews", label: "Reviews" },
+  { to: "/contact", label: "Contact & Order" },
 ] as const;
