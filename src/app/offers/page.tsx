@@ -16,7 +16,7 @@ export default function OffersPage() {
     navigator.clipboard.writeText(code);
     setCopiedCode(code);
     toast.success(`Promo Code "${code}" Copied!`, {
-      description: "Mention this code when placing your order on WhatsApp or web.",
+      description: "Mention this code when placing your order online.",
     });
     setTimeout(() => setCopiedCode(null), 3000);
   };
