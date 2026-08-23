@@ -42,8 +42,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full scroll-smooth">
-      <body className="flex min-h-full flex-col bg-[#FFFFFF] text-neutral-800 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <html lang="en" className="h-full scroll-smooth" suppressHydrationWarning>
+      <body
+        className="flex min-h-full flex-col bg-[#FFFFFF] text-neutral-800 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900"
+        suppressHydrationWarning
+      >
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>

@@ -11,10 +11,12 @@ import { useCart } from "@/context/CartContext";
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { openCart, totalCount } = useCart();
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -72,7 +74,7 @@ export function Header() {
           >
             <ShoppingBag className="h-5 w-5 text-neutral-900" strokeWidth={2} />
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-black text-white shadow-xs">
-              {totalCount}
+              {mounted ? totalCount : 0}
             </span>
           </button>
 
