@@ -1,148 +1,162 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingBag, Sparkles, ArrowRight, CheckCircle2, ShoppingCart } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Layers, Sparkles, ShieldCheck } from "lucide-react";
 import { type Product } from "@/data/site";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 
 export function ProductOrderClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || "M");
-  const [customName, setCustomName] = useState("");
-  const [customNumber, setCustomNumber] = useState("");
-  const [includePatches, setIncludePatches] = useState(true);
+  const [quantity, setQuantity] = useState<number>(1);
   const { addItem, openCart } = useCart();
   const router = useRouter();
 
-  // Extract numerical price from "৳1,650"
   const priceNum = parseInt(product.price.replace(/[^\d]/g, ""), 10) || 1500;
 
   const handleAddToCart = () => {
-    addItem({
-      slug: product.slug,
-      name: product.name,
-      price: priceNum,
-      priceFormatted: product.price,
-      size: selectedSize,
-      customName: customName.trim() || undefined,
-      customNumber: customNumber.trim() || undefined,
-      patches: includePatches ? "Official tournament patches included" : undefined,
-      image: product.image,
-    });
+    for (let i = 0; i < quantity; i++) {
+      addItem({
+        slug: product.slug,
+        name: product.name,
+        price: priceNum,
+        priceFormatted: product.price,
+        size: selectedSize,
+        image: product.image,
+      });
+    }
   };
 
-  const handleProceedToOrder = () => {
+  const handleBuyNow = () => {
     handleAddToCart();
     const params = new URLSearchParams();
     params.set("jersey", product.name);
     params.set("size", selectedSize);
-    if (customName.trim()) params.set("name", customName.trim().toUpperCase());
-    if (customNumber.trim()) params.set("number", customNumber.trim());
-    if (includePatches) params.set("patches", "yes");
+    params.set("quantity", quantity.toString());
     router.push(`/contact?${params.toString()}`);
   };
 
   return (
-    <div className="rounded-xl border border-neutral-200 bg-neutral-50/70 p-6 space-y-6">
-      {/* 1. Size Selection */}
+    <div className="space-y-6">
+      {/* 1. Size Selection Header */}
       <div>
-        <div className="flex items-center justify-between mb-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-neutral-800">
-            Select Size:
-          </label>
-          <span className="text-[11px] text-neutral-500">Standard Athletic Fit</span>
+        <div className="flex items-center justify-between mb-2 text-xs font-mono">
+          <span className="font-bold uppercase tracking-wider text-neutral-800">Select Size</span>
+          <a
+            href="#size-chart"
+            className="text-neutral-500 underline hover:text-neutral-900 transition-colors"
+          >
+            Size Guide
+          </a>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {product.sizes.map((size) => (
-            <button
-              key={size}
-              type="button"
-              onClick={() => setSelectedSize(size)}
-              className={`h-10 min-w-12 rounded-lg border px-3 text-xs font-bold transition-all ${
-                selectedSize === size
-                  ? "border-[#047857] bg-[#047857] text-white shadow-xs"
-                  : "border-neutral-200 bg-white text-neutral-800 hover:border-emerald-300"
-              }`}
-            >
-              {size}
-            </button>
-          ))}
+
+        {/* Square Size Selectors */}
+        <div className="flex gap-2">
+          {["S", "M", "L", "XL", "XXL"].map((size) => {
+            const isAvailable = product.sizes.includes(size);
+            const isSelected = selectedSize === size;
+            return (
+              <button
+                key={size}
+                type="button"
+                disabled={!isAvailable}
+                onClick={() => setSelectedSize(size)}
+                className={`flex h-9 w-10 sm:h-10 sm:w-11 items-center justify-center border font-mono text-xs font-bold transition-all cursor-pointer ${
+                  isSelected
+                    ? "border-black bg-black text-white"
+                    : isAvailable
+                      ? "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-500"
+                      : "border-neutral-200 bg-neutral-100 text-neutral-300 opacity-40 cursor-not-allowed"
+                }`}
+              >
+                {size}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* 2. Free Custom Name & Number Customization */}
-      <div className="border-t border-neutral-200 pt-4">
-        <div className="flex items-center gap-1.5 text-emerald-800 mb-3">
-          <Sparkles className="h-4 w-4 text-emerald-700" />
-          <span className="text-xs font-bold uppercase tracking-wide">
-            Free Matchday Name & Number Customization
+      {/* 2. Quantity Selector */}
+      <div>
+        <span className="block text-[11px] font-mono font-bold uppercase tracking-wider text-neutral-800 mb-2">
+          Quantity
+        </span>
+        <div className="flex items-center border border-neutral-300 bg-white w-fit">
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            className="px-3 py-1.5 text-neutral-600 hover:bg-neutral-100 transition-colors"
+            aria-label="Decrease quantity"
+          >
+            <Minus className="h-3.5 w-3.5" />
+          </button>
+          <span className="px-4 text-xs font-mono font-bold text-neutral-900 min-w-[28px] text-center">
+            {quantity}
           </span>
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => q + 1)}
+            className="px-3 py-1.5 text-neutral-600 hover:bg-neutral-100 transition-colors"
+            aria-label="Increase quantity"
+          >
+            <Plus className="h-3.5 w-3.5" />
+          </button>
         </div>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div>
-            <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
-              Custom Name on Back (e.g. MESSI, ARMAN)
-            </label>
-            <input
-              type="text"
-              placeholder="YOUR NAME"
-              value={customName}
-              onChange={(e) => setCustomName(e.target.value.toUpperCase())}
-              className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold uppercase text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#047857]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
-              Squad Number (e.g. 10, 7, 9)
-            </label>
-            <input
-              type="text"
-              placeholder="10"
-              maxLength={3}
-              value={customNumber}
-              onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, ""))}
-              className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#047857]"
-            />
-          </div>
-        </div>
-
-        <label className="mt-3 flex items-center gap-2 cursor-pointer text-xs text-neutral-700">
-          <input
-            type="checkbox"
-            checked={includePatches}
-            onChange={(e) => setIncludePatches(e.target.checked)}
-            className="rounded border-neutral-300 text-emerald-700 focus:ring-emerald-600 h-4 w-4"
-          />
-          <span>Include official tournament sleeve patches (UCL / League / World Cup)</span>
-        </label>
       </div>
 
-      {/* 3. Action Buttons */}
-      <div className="pt-2 space-y-2.5">
+      {/* 3. Action Buttons (Add To Cart & Buy Now) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
         <button
           type="button"
           onClick={handleAddToCart}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#047857] px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-xs hover:bg-[#065F46] transition-all"
+          className="inline-flex items-center justify-center gap-2 bg-[#047857] py-3.5 px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-xs hover:bg-[#065F46] transition-colors"
         >
           <ShoppingCart className="h-4 w-4" />
-          Add to Cart — {product.price}
+          Add to Cart
         </button>
 
         <button
           type="button"
-          onClick={handleProceedToOrder}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-900 bg-white px-6 py-3 text-xs font-bold uppercase tracking-wider text-neutral-900 hover:bg-neutral-50 transition-colors"
+          onClick={handleBuyNow}
+          className="inline-flex items-center justify-center bg-black py-3.5 px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-xs hover:bg-neutral-800 transition-colors"
         >
-          Buy Now (Direct Checkout)
-          <ArrowRight className="h-4 w-4" />
+          Buy Now
         </button>
+      </div>
 
-        <p className="mt-2 text-center text-[11px] text-neutral-500">
-          Cash on delivery & home delivery available nationwide across 64 districts
-        </p>
+      {/* 4. Pro Features Info Box */}
+      <div className="border border-neutral-300 p-4 divide-y divide-neutral-200 text-xs space-y-3 font-mono">
+        <div className="grid grid-cols-2 gap-4 pb-1">
+          <div className="flex items-start gap-2.5">
+            <Layers className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold text-neutral-900 uppercase text-[10px]">180 GSM MESH</p>
+              <p className="text-neutral-500 text-[10px] mt-0.5 leading-tight">
+                Ultra-breathable micro-knit
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2.5">
+            <Sparkles className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold text-neutral-900 uppercase text-[10px]">FULL SUBLIMATION</p>
+              <p className="text-neutral-500 text-[10px] mt-0.5 leading-tight">
+                Fade-resistant graphics
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-3 flex items-start gap-2.5">
+          <ShieldCheck className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+          <div>
+            <p className="font-bold text-neutral-900 uppercase text-[10px]">PRO-GRADE STITCHING</p>
+            <p className="text-neutral-500 text-[10px] mt-0.5 leading-relaxed">
+              Reinforced seams designed for intense matchday conditions and continuous wash cycles.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

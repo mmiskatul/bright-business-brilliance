@@ -7,6 +7,7 @@ interface ProductGalleryProps {
   backImage?: string;
   galleryImages?: { label: string; url: string }[];
   imageAlt: string;
+  badge?: string;
 }
 
 export function ProductGalleryClient({
@@ -14,74 +15,58 @@ export function ProductGalleryClient({
   backImage,
   galleryImages,
   imageAlt,
+  badge = "NEW ARRIVAL",
 }: ProductGalleryProps) {
   const [activeImage, setActiveImage] = useState(image);
 
-  // Build list of thumbnails
+  // Build thumbnail list
   const thumbnails: { label: string; url: string }[] = [];
   if (galleryImages && galleryImages.length > 0) {
     thumbnails.push(...galleryImages);
   } else {
-    thumbnails.push({ label: "Front View", url: image });
+    thumbnails.push({ label: "Front", url: image });
     if (backImage) {
-      thumbnails.push({ label: "Back View", url: backImage });
+      thumbnails.push({ label: "Back", url: backImage });
     }
   }
 
   return (
-    <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border border-border bg-neutral-50 shadow-soft">
-        <img
-          src={activeImage}
-          alt={imageAlt}
-          width={1200}
-          height={900}
-          className="w-full h-full object-cover aspect-[4/3] transition-all duration-300"
-        />
-      </div>
-
+    <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
+      {/* Left Vertical Thumbnails */}
       {thumbnails.length > 1 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          {thumbnails.map((thumb) => {
+        <div className="flex sm:flex-col gap-2 shrink-0">
+          {thumbnails.map((thumb, idx) => {
             const isActive = activeImage === thumb.url;
             return (
               <button
-                key={thumb.url + thumb.label}
+                key={thumb.url + idx}
                 type="button"
                 onClick={() => setActiveImage(thumb.url)}
-                className={`overflow-hidden rounded-xl border p-1 transition-all ${
+                className={`h-14 w-14 sm:h-16 sm:w-16 overflow-hidden border p-1 bg-[#F9F9F9] transition-all cursor-pointer ${
                   isActive
-                    ? "border-emerald-600 ring-2 ring-emerald-600/30 bg-emerald-50/40"
-                    : "border-border hover:border-emerald-300 bg-white"
+                    ? "border-black ring-1 ring-black"
+                    : "border-neutral-200 hover:border-neutral-400 opacity-75 hover:opacity-100"
                 }`}
               >
-                <img
-                  src={thumb.url}
-                  alt={thumb.label}
-                  className="h-16 w-full object-cover rounded-lg aspect-[4/3]"
-                />
-                <span className="block text-[10px] font-bold text-center mt-1 text-neutral-800 truncate px-1">
-                  {thumb.label}
-                </span>
+                <img src={thumb.url} alt={thumb.label} className="h-full w-full object-contain" />
               </button>
             );
           })}
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-3">
-        <div className="rounded-xl border border-border bg-white p-3 text-center">
-          <span className="text-[10px] uppercase font-bold text-muted-foreground">Fabric</span>
-          <p className="text-xs font-bold text-neutral-900 mt-0.5">180 GSM Mesh</p>
-        </div>
-        <div className="rounded-xl border border-border bg-white p-3 text-center">
-          <span className="text-[10px] uppercase font-bold text-muted-foreground">Printing</span>
-          <p className="text-xs font-bold text-neutral-900 mt-0.5">Heat-Sealed</p>
-        </div>
-        <div className="rounded-xl border border-border bg-white p-3 text-center">
-          <span className="text-[10px] uppercase font-bold text-muted-foreground">Dispatch</span>
-          <p className="text-xs font-bold text-neutral-900 mt-0.5">24–48h Delivery</p>
-        </div>
+      {/* Main Showcase Image */}
+      <div className="relative flex-1 overflow-hidden border border-neutral-300 bg-[#EFEFEF] flex items-center justify-center p-4 aspect-[3/4] sm:aspect-[4/5]">
+        {badge && (
+          <span className="absolute top-3 left-3 bg-black px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-wider text-white shadow-2xs">
+            {badge}
+          </span>
+        )}
+        <img
+          src={activeImage}
+          alt={imageAlt}
+          className="h-full w-full object-contain transition-all duration-300"
+        />
       </div>
     </div>
   );
