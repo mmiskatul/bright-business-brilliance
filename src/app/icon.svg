@@ -1,27 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Background Badge -->
-  <rect width="64" height="64" rx="14" fill="#0A0A0A" />
+  <!-- Solid Black Rounded Square -->
+  <rect width="64" height="64" rx="10" fill="#000000" />
   
-  <!-- Outer Sport Shield Contour -->
-  <path
-    d="M32 7L52 15V33C52 46 32 57 32 57C32 57 12 46 12 33V15L32 7Z"
-    fill="none"
-    stroke="#10B981"
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    opacity="0.8"
-  />
-  
-  <!-- Dynamic Athletic 'A' Chevron Vector -->
-  <path
-    d="M32 14L43 42H36L32 31L28 42H21L32 14Z"
+  <!-- Soccer Ball Outer Ring -->
+  <circle cx="32" cy="32" r="19" fill="none" stroke="#FFFFFF" stroke-width="3.2" />
+
+  <!-- Central Pentagon -->
+  <polygon
+    points="32,22.4 39.6,28 36.6,37 27.4,37 24.4,28"
     fill="#FFFFFF"
+    stroke="#FFFFFF"
+    stroke-width="1.6"
+    stroke-linejoin="round"
   />
-  <path
-    d="M27 35H37"
-    stroke="#10B981"
-    stroke-width="3"
-    stroke-linecap="round"
-  />
+
+  <!-- Radiating Seams to Outer Perimeter -->
+  <!-- Top -->
+  <line x1="32" y1="22.4" x2="32" y2="13.2" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+  <!-- Top-Right -->
+  <line x1="39.6" y1="28" x2="48.8" y2="23.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+  <!-- Bottom-Right -->
+  <line x1="36.6" y1="37" x2="44.4" y2="46.4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+  <!-- Bottom-Left -->
+  <line x1="27.4" y1="37" x2="19.6" y2="46.4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+  <!-- Top-Left -->
+  <line x1="24.4" y1="28" x2="15.2" y2="23.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
 </svg>

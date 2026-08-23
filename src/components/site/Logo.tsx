@@ -1,41 +1,108 @@
 interface LogoProps {
   className?: string;
-  variant?: "dark" | "emerald";
   showText?: boolean;
 }
 
-export function Logo({ className = "h-7 w-7", variant = "dark", showText = false }: LogoProps) {
-  const isEmerald = variant === "emerald";
-  const bgClass = isEmerald ? "bg-emerald-700 text-white" : "bg-neutral-900 text-white";
-
+export function Logo({ className = "h-7 w-7", showText = false }: LogoProps) {
   return (
-    <div className="inline-flex items-center gap-2">
+    <div className="inline-flex items-center gap-2.5">
       <div
-        className={`relative flex items-center justify-center rounded-lg ${bgClass} shadow-xs transition-transform hover:scale-105 ${className}`}
+        className={`relative flex items-center justify-center rounded-[5px] bg-black text-white shadow-xs transition-transform hover:scale-105 ${className}`}
         aria-hidden="true"
       >
         <svg
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4/5 w-4/5"
+          className="h-[75%] w-[75%]"
         >
-          {/* Outer Sport Shield Contour */}
-          <path
-            d="M16 3.5L26 7.5V16.5C26 23 16 28.5 16 28.5C16 28.5 6 23 6 16.5V7.5L16 3.5Z"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
+          {/* Soccer Ball Outer Ring */}
+          <circle cx="16" cy="16" r="9.5" stroke="white" strokeWidth="1.6" />
+
+          {/* Central Pentagon */}
+          <polygon
+            points="16,11.2 19.8,14 18.3,18.5 13.7,18.5 12.2,14"
+            fill="white"
+            stroke="white"
+            strokeWidth="0.8"
             strokeLinejoin="round"
-            className="opacity-40"
           />
-          {/* Dynamic Athletic 'A' Chevron Vector */}
-          <path d="M16 7L21.5 21H18L16 15.5L14 21H10.5L16 7Z" fill="currentColor" />
-          <path d="M13.5 17.5H18.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+
+          {/* Radiating Seams to Outer Perimeter */}
+          {/* Top */}
+          <line
+            x1="16"
+            y1="11.2"
+            x2="16"
+            y2="6.6"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          {/* Top-Right */}
+          <line
+            x1="19.8"
+            y1="14"
+            x2="24.4"
+            y2="11.8"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          {/* Bottom-Right */}
+          <line
+            x1="18.3"
+            y1="18.5"
+            x2="22.2"
+            y2="23.2"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          {/* Bottom-Left */}
+          <line
+            x1="13.7"
+            y1="18.5"
+            x2="9.8"
+            y2="23.2"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          {/* Top-Left */}
+          <line
+            x1="12.2"
+            y1="14"
+            x2="7.6"
+            y2="11.8"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+
+          {/* Outer edge patch accents */}
+          <path
+            d="M11.8 7.4 C13 6.8 14.5 6.5 16 6.5 C17.5 6.5 19 6.8 20.2 7.4"
+            stroke="white"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M25 15 C25.3 16.2 25.4 17.5 25 18.8"
+            stroke="white"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M7 15 C6.7 16.2 6.6 17.5 7 18.8"
+            stroke="white"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
         </svg>
       </div>
       {showText && (
-        <span className="font-display text-sm font-black tracking-wider text-neutral-900 uppercase">
+        <span className="font-display text-base font-black tracking-tight text-neutral-900 uppercase">
           ASFA DESIGN
         </span>
       )}
