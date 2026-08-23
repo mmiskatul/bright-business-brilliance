@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { products } from "@/data/products";
+import { ProductCard } from "@/components/site/ProductCard";
 
 export default function HomePage() {
   const popularKits = products.slice(0, 2);
@@ -45,7 +46,7 @@ export default function HomePage() {
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
               <Link
-                href="/contact"
+                href="/custom"
                 className="inline-flex items-center rounded-md border border-neutral-300 bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-neutral-800 transition-colors hover:bg-neutral-50 shadow-2xs"
               >
                 Custom Teamwear Quote
@@ -142,65 +143,7 @@ export default function HomePage() {
           {/* 2-Column Product Cards */}
           <div className="grid gap-6 sm:grid-cols-2">
             {popularKits.map((product) => (
-              <Link
-                key={product.slug}
-                href={`/products/${product.slug}`}
-                className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:border-neutral-300 hover:shadow-sm"
-              >
-                {/* Image Box */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-4">
-                  <img
-                    src={product.image}
-                    alt={product.imageAlt}
-                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {product.badge && (
-                    <span className="absolute top-3 left-3 rounded-full bg-white/95 backdrop-blur px-2.5 py-0.5 text-[10px] font-bold text-neutral-800 shadow-xs border border-neutral-200">
-                      {product.badge}
-                    </span>
-                  )}
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                    <span className="rounded-md bg-emerald-600 px-2 py-0.5 text-xs font-bold text-white shadow-xs">
-                      {product.price}
-                    </span>
-                    {product.originalPrice && (
-                      <span className="text-[10px] font-semibold text-neutral-400 line-through bg-white/90 px-1 py-0.5 rounded shadow-xs">
-                        {product.originalPrice}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Card Body */}
-                <div className="flex flex-1 flex-col p-5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">
-                    {product.category}
-                  </span>
-                  <h3 className="mt-1 text-base font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-neutral-500 line-clamp-2">
-                    {product.summary}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3">
-                    <div className="flex gap-1">
-                      {product.sizes.map((s) => (
-                        <span
-                          key={s}
-                          className="rounded border border-neutral-200 bg-neutral-50 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-700"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 group-hover:text-emerald-800">
-                      View Details
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         </div>
@@ -224,46 +167,7 @@ export default function HomePage() {
           {/* 3-Column Best Sellers Grid */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {bestSellers.map((product, idx) => (
-              <Link
-                key={product.slug + idx}
-                href={`/products/${product.slug}`}
-                className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:border-neutral-300 hover:shadow-sm"
-              >
-                {/* Product Image Box */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-4">
-                  <img
-                    src={product.image}
-                    alt={product.imageAlt}
-                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute top-3 left-3 rounded-full bg-neutral-900 px-2.5 py-0.5 text-[9px] font-bold text-white uppercase tracking-wide">
-                    Best Seller
-                  </span>
-                  <span className="absolute top-3 right-3 rounded-md bg-emerald-600 px-2 py-0.5 text-xs font-bold text-white shadow-xs">
-                    {product.price}
-                  </span>
-                </div>
-
-                {/* Card Body */}
-                <div className="flex flex-1 flex-col p-5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">
-                    {product.category}
-                  </span>
-                  <h3 className="mt-1 text-sm font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-neutral-500 line-clamp-2">
-                    {product.summary}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3">
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 group-hover:text-emerald-800">
-                      View Details
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard key={product.slug + idx} product={product} featuredBadge="Best Seller" />
             ))}
           </div>
         </div>
