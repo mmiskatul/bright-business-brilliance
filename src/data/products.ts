@@ -76,41 +76,7 @@ export const products: Product[] = [
     featured: true,
     inStock: true,
   },
-  {
-    slug: "asfa-bangladesh-wave-concept-polo-kit",
-    name: "ASFA Bangladesh National Wave Concept Polo Kit (Monirul 13 Edition)",
-    category: "National Kits",
-    price: "৳1,550",
-    originalPrice: "৳1,850",
-    badge: "ASFA Original Concept",
-    summary:
-      "Signature Bangladesh national wave edition featuring dynamic oceanic cyan & azure water-break graphics, crisp white polo collar, national flag chest patch, gold-bordered national crest, and MONIRUL 13 (38 BN) matchday squad back print.",
-    description:
-      "Engineered by ASFA Design, this concept kit celebrates Bangladeshi resilience with surging ocean wave sublimation graphics rising from deep azure blue into clean white. Features fold-over polo button collar, national flag embroidery, circular national seal with tiger scratch tracks, and authentic Asfa Design script watermark on the lower hem.",
-    details: [
-      "Original ASFA DESIGN surging tidal wave sublimation graphic",
-      "Official embroidered Bangladesh National Flag right chest patch",
-      "Gold-embroidered National Crest seal with royal tiger claw scratch elements",
-      "Official squad MONIRUL 13 back lettering & 38 BN battalion squad text",
-      "Authentic cursive 'Asfa Design' designer watermark signature on lower hem",
-      "180 GSM Active-Breeze polyester with sweat-wicking hexagonal weave",
-      "Complimentary custom player name & squad number upon request",
-      "Pre-shrunk fabric ensuring zero wash shrinkage",
-    ],
-    fabric: "Sweat-Wicking Jacquard Active-Poly (180 GSM)",
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    image: "/assets/asfa-bangladesh-wave-front.png",
-    backImage: "/assets/asfa-bangladesh-wave-back.png",
-    galleryImages: [
-      { label: "Polo Front View", url: "/assets/asfa-bangladesh-wave-front.png" },
-      { label: "Back Squad Customization", url: "/assets/asfa-bangladesh-wave-back.png" },
-      { label: "Wave Sublimation & Texture", url: "/assets/jersey-fabric.jpg" },
-      { label: "Collector Packaging", url: "/assets/jersey-box.jpg" },
-    ],
-    imageAlt: "ASFA Design custom Bangladesh national wave polo jersey in white and azure blue",
-    featured: true,
-    inStock: true,
-  },
+
   {
     slug: "asfa-kalma-united-signature-kit",
     name: "ASFA KALMA United Custom Matchday Kit (Venomes 8 Edition)",
