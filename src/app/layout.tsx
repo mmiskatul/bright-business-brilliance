@@ -4,6 +4,8 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { business } from "@/data/site";
 import { Toaster } from "sonner";
+import { CartProvider } from "@/context/CartContext";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 
 export const metadata: Metadata = {
   title: {
@@ -42,10 +44,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="h-full scroll-smooth">
       <body className="flex min-h-full flex-col bg-[#FFFFFF] text-neutral-800 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <Toaster position="bottom-right" richColors />
+        <CartProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+          <Toaster position="bottom-right" richColors />
+        </CartProvider>
       </body>
     </html>
   );

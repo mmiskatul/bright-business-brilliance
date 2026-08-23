@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { business, nav } from "@/data/site";
 import { Logo } from "./Logo";
+import { useCart } from "@/context/CartContext";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { openCart, totalCount } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -21,7 +23,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-neutral-200/80 bg-white/98 backdrop-blur-md transition-all duration-200 ${
+      className={`sticky top-0 z-40 border-b border-neutral-200/80 bg-white/98 backdrop-blur-md transition-all duration-200 ${
         scrolled ? "shadow-xs border-neutral-300" : ""
       }`}
     >
@@ -62,16 +64,17 @@ export function Header() {
 
         {/* Right: Cart / Order Action */}
         <div className="flex items-center gap-2">
-          <Link
-            href="/contact"
-            className="relative inline-flex items-center justify-center h-9 w-9 rounded-full hover:bg-neutral-100 transition-colors text-neutral-800"
-            aria-label="Order Cart"
+          <button
+            type="button"
+            onClick={openCart}
+            className="relative inline-flex items-center justify-center h-9 w-9 rounded-full hover:bg-neutral-100 transition-colors text-neutral-800 cursor-pointer"
+            aria-label="Open Equipment Cart"
           >
             <ShoppingBag className="h-5 w-5 text-neutral-900" strokeWidth={2} />
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-black text-white shadow-xs">
-              0
+              {totalCount}
             </span>
-          </Link>
+          </button>
 
           {/* Mobile menu button */}
           <button
@@ -115,13 +118,23 @@ export function Header() {
             })}
           </ul>
 
-          <div className="mt-3 pt-3 border-t border-neutral-100">
+          <div className="mt-3 pt-3 border-t border-neutral-100 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openCart();
+              }}
+              className="w-full flex items-center justify-center gap-2 rounded-md bg-neutral-100 px-4 py-2.5 text-center text-xs font-bold text-neutral-900 uppercase tracking-wider"
+            >
+              <ShoppingBag className="h-4 w-4" /> View Cart ({totalCount})
+            </button>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
               className="block rounded-md bg-emerald-700 px-4 py-2.5 text-center text-xs font-bold text-white shadow-xs uppercase tracking-wider"
             >
-              Order & Teamwear Inquiry
+              Secure Checkout
             </Link>
           </div>
         </nav>

@@ -1,35 +1,57 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingBag, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ShoppingBag, Sparkles, ArrowRight, CheckCircle2, ShoppingCart } from "lucide-react";
 import { type Product } from "@/data/site";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCart } from "@/context/CartContext";
 
 export function ProductOrderClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || "M");
   const [customName, setCustomName] = useState("");
   const [customNumber, setCustomNumber] = useState("");
   const [includePatches, setIncludePatches] = useState(true);
+  const { addItem, openCart } = useCart();
+  const router = useRouter();
 
-  const getOrderUrl = () => {
+  // Extract numerical price from "৳1,650"
+  const priceNum = parseInt(product.price.replace(/[^\d]/g, ""), 10) || 1500;
+
+  const handleAddToCart = () => {
+    addItem({
+      slug: product.slug,
+      name: product.name,
+      price: priceNum,
+      priceFormatted: product.price,
+      size: selectedSize,
+      customName: customName.trim() || undefined,
+      customNumber: customNumber.trim() || undefined,
+      patches: includePatches ? "Official tournament patches included" : undefined,
+      image: product.image,
+    });
+  };
+
+  const handleProceedToOrder = () => {
+    handleAddToCart();
     const params = new URLSearchParams();
     params.set("jersey", product.name);
     params.set("size", selectedSize);
     if (customName.trim()) params.set("name", customName.trim().toUpperCase());
     if (customNumber.trim()) params.set("number", customNumber.trim());
     if (includePatches) params.set("patches", "yes");
-    return `/contact?${params.toString()}`;
+    router.push(`/contact?${params.toString()}`);
   };
 
   return (
-    <div className="rounded-xl border border-border bg-neutral-50/60 p-6 space-y-6">
+    <div className="rounded-xl border border-neutral-200 bg-neutral-50/70 p-6 space-y-6">
       {/* 1. Size Selection */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <label className="text-xs font-bold uppercase tracking-wider text-neutral-800">
             Select Size:
           </label>
-          <span className="text-[11px] text-muted-foreground">Standard Athletic Fit</span>
+          <span className="text-[11px] text-neutral-500">Standard Athletic Fit</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {product.sizes.map((size) => (
@@ -39,8 +61,8 @@ export function ProductOrderClient({ product }: { product: Product }) {
               onClick={() => setSelectedSize(size)}
               className={`h-10 min-w-12 rounded-lg border px-3 text-xs font-bold transition-all ${
                 selectedSize === size
-                  ? "border-emerald-700 bg-emerald-700 text-white shadow-sm"
-                  : "border-border bg-white text-neutral-800 hover:border-emerald-300"
+                  ? "border-[#047857] bg-[#047857] text-white shadow-xs"
+                  : "border-neutral-200 bg-white text-neutral-800 hover:border-emerald-300"
               }`}
             >
               {size}
@@ -50,7 +72,7 @@ export function ProductOrderClient({ product }: { product: Product }) {
       </div>
 
       {/* 2. Free Custom Name & Number Customization */}
-      <div className="border-t border-border/80 pt-4">
+      <div className="border-t border-neutral-200 pt-4">
         <div className="flex items-center gap-1.5 text-emerald-800 mb-3">
           <Sparkles className="h-4 w-4 text-emerald-700" />
           <span className="text-xs font-bold uppercase tracking-wide">
@@ -68,7 +90,7 @@ export function ProductOrderClient({ product }: { product: Product }) {
               placeholder="YOUR NAME"
               value={customName}
               onChange={(e) => setCustomName(e.target.value.toUpperCase())}
-              className="w-full rounded-md border border-border bg-white px-3 py-2 text-xs font-bold uppercase text-neutral-900 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold uppercase text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#047857]"
             />
           </div>
 
@@ -82,7 +104,7 @@ export function ProductOrderClient({ product }: { product: Product }) {
               maxLength={3}
               value={customNumber}
               onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, ""))}
-              className="w-full rounded-md border border-border bg-white px-3 py-2 text-xs font-bold text-neutral-900 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#047857]"
             />
           </div>
         </div>
@@ -92,23 +114,33 @@ export function ProductOrderClient({ product }: { product: Product }) {
             type="checkbox"
             checked={includePatches}
             onChange={(e) => setIncludePatches(e.target.checked)}
-            className="rounded border-border text-emerald-700 focus:ring-emerald-600 h-4 w-4"
+            className="rounded border-neutral-300 text-emerald-700 focus:ring-emerald-600 h-4 w-4"
           />
           <span>Include official tournament sleeve patches (UCL / League / World Cup)</span>
         </label>
       </div>
 
       {/* 3. Action Buttons */}
-      <div className="pt-2">
-        <Link
-          href={getOrderUrl()}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 px-6 py-3.5 text-sm font-bold text-white shadow-soft hover:bg-emerald-800 transition-all hover:shadow-lift"
+      <div className="pt-2 space-y-2.5">
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#047857] px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-xs hover:bg-[#065F46] transition-all"
         >
-          <ShoppingBag className="h-4 w-4" />
-          Proceed to Order ({product.price})
+          <ShoppingCart className="h-4 w-4" />
+          Add to Cart — {product.price}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleProceedToOrder}
+          className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-900 bg-white px-6 py-3 text-xs font-bold uppercase tracking-wider text-neutral-900 hover:bg-neutral-50 transition-colors"
+        >
+          Buy Now (Direct Checkout)
           <ArrowRight className="h-4 w-4" />
-        </Link>
-        <p className="mt-2 text-center text-[11px] text-muted-foreground">
+        </button>
+
+        <p className="mt-2 text-center text-[11px] text-neutral-500">
           Cash on delivery & home delivery available nationwide across 64 districts
         </p>
       </div>
