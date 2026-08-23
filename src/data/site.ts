@@ -44,10 +44,9 @@ export interface Product {
 }
 
 export const nav = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/products", label: "Jerseys & Kits" },
-  { to: "/offers", label: "Offers" },
-  { to: "/reviews", label: "Reviews" },
-  { to: "/contact", label: "Contact & Order" },
+  { to: "/", label: "HOME" },
+  { to: "/products", label: "JERSEYS" },
+  { to: "/offers", label: "OFFERS" },
+  { to: "/faq", label: "FAQ" },
+  { to: "/reviews", label: "REVIEWS" },
 ] as const;
