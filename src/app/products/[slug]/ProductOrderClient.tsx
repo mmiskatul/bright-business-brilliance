@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { MessageCircle, ShoppingBag, CheckCircle, Sparkles } from "lucide-react";
 import { type Product, business } from "@/data/site";
-import { toast } from "sonner";
 
 export function ProductOrderClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || "M");

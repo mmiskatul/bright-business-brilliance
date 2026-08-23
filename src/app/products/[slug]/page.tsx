@@ -10,6 +10,8 @@ import {
   MessageCircle,
   Sparkles,
   ShoppingBag,
+  Ruler,
+  Info,
 } from "lucide-react";
 import { Section, SectionHeading } from "@/components/site/Section";
 import { ButtonLink } from "@/components/site/Button";
@@ -37,6 +39,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: product.summary,
   };
 }
+
+const sizeMeasurements = [
+  { size: "S", chest: "38 in", length: "27 in", shoulder: "17 in", height: "5'4\" – 5'7\"" },
+  { size: "M", chest: "40 in", length: "28 in", shoulder: "18 in", height: "5'7\" – 5'9\"" },
+  { size: "L", chest: "42 in", length: "29 in", shoulder: "19 in", height: "5'9\" – 5'11\"" },
+  { size: "XL", chest: "44 in", length: "30 in", shoulder: "20 in", height: "5'11\" – 6'1\"" },
+  { size: "XXL", chest: "46 in", length: "31 in", shoulder: "21 in", height: "6'1\"+" },
+];
 
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
@@ -121,21 +131,74 @@ export default async function ProductDetailPage({ params }: Props) {
         </div>
       </Section>
 
-      {/* Specifications & Deliverables */}
+      {/* Specifications & Detailed Size Guide */}
       <Section tone="alt" bordered>
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeading eyebrow="Specifications" title="Fabric & Construction Details" />
-          <ul className="space-y-3.5">
-            {product.details.map((d) => (
-              <li
-                key={d}
-                className="flex items-start gap-3 rounded-lg bg-white border border-border/70 p-4 shadow-sm"
-              >
-                <Check className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm font-medium text-neutral-800">{d}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="grid gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Specifications"
+              title="Fabric, Weave & Construction"
+              description="Every jersey is built using industrial-grade materials designed for maximum longevity on and off the pitch."
+            />
+            <ul className="mt-6 space-y-3">
+              {product.details.map((d) => (
+                <li
+                  key={d}
+                  className="flex items-start gap-3 rounded-lg bg-white border border-border/70 p-4 shadow-sm"
+                >
+                  <Check className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-medium text-neutral-800">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Ruler className="h-5 w-5 text-emerald-700" />
+              <h2 className="text-xl font-bold text-neutral-900">Official Jersey Size Chart</h2>
+            </div>
+            <p className="text-xs text-muted-foreground mb-5">
+              Standard athletic fit in inches. If you prefer a relaxed or streetwear oversized fit,
+              we recommend ordering one size larger.
+            </p>
+
+            <div className="overflow-x-auto rounded-xl border border-border bg-white shadow-soft">
+              <table className="w-full text-left text-xs">
+                <thead className="border-b border-border bg-neutral-50/80 text-[11px] font-bold uppercase tracking-wider text-neutral-700">
+                  <tr>
+                    <th className="py-3 px-4">Size</th>
+                    <th className="py-3 px-4">Chest</th>
+                    <th className="py-3 px-4">Length</th>
+                    <th className="py-3 px-4">Shoulder</th>
+                    <th className="py-3 px-4">Recommended Height</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/60">
+                  {sizeMeasurements.map((m) => (
+                    <tr key={m.size} className="hover:bg-neutral-50/50">
+                      <td className="py-3 px-4 font-bold text-emerald-800">{m.size}</td>
+                      <td className="py-3 px-4 text-neutral-700">{m.chest}</td>
+                      <td className="py-3 px-4 text-neutral-700">{m.length}</td>
+                      <td className="py-3 px-4 text-neutral-700">{m.shoulder}</td>
+                      <td className="py-3 px-4 text-muted-foreground">{m.height}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-4">
+              <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <Info className="h-4 w-4" />
+                Wash & Care Instructions
+              </div>
+              <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+                Machine wash cold (30°C) inside out. Do not bleach. Air dry in shade. Do not iron
+                directly over heat-pressed vinyl names, numbers, or silicone badges.
+              </p>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -157,11 +220,13 @@ export default async function ProductDetailPage({ params }: Props) {
                 />
               </div>
               <span className="text-[11px] font-bold uppercase text-emerald-700">{p.category}</span>
-              <h3 className="mt-1 text-base font-bold text-neutral-900 leading-snug">{p.name}</h3>
+              <h3 className="mt-1 text-base font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                {p.name}
+              </h3>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-sm font-bold text-neutral-900">{p.price}</span>
                 <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-                  View Kit <ArrowRight className="h-3 w-3" />
+                  View Kit Details <ArrowRight className="h-3 w-3" />
                 </span>
               </div>
             </Link>

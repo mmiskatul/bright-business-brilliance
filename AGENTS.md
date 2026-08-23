@@ -1,10 +1,10 @@
-# ASFA Design — AI Agent Guidelines
+# ASFA Design — Guidelines
 
 ## Architecture & Project Structure
 
-- **Frontend**: Next.js 15+ (App Router), TypeScript, TailwindCSS, Lucide React, Sonner.
-- **Backend**: Fastify 5+, TypeScript, Mongoose ODM, Swagger OpenAPI docs (`/documentation`).
-- **Database**: MongoDB Atlas Cluster (`asfa_design`).
+- **Framework**: Next.js 15+ (App Router), TypeScript, TailwindCSS v4 with PostCSS.
+- **Components & UI**: Lucide React, Radix UI, Sonner Toaster.
+- **Data Source**: Static TypeScript data modules in `src/data/` (`products.ts`, `reviews.ts`, `offers.ts`, `gallery.ts`, `site.ts`).
 - **Theme**: Strict Light-Themed luxury sportswear design (`#FFFFFF`, `#FAFAF8`, `#F8F9F7`).
 
 ## Core Conventions

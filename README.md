@@ -1,55 +1,28 @@
-# ASFA Design — Sports Apparel & Football Jersey Platform
+# ASFA Design — Official Sports Apparel & Custom Jersey Studio (Dhaka)
 
-A complete, production-ready, light-themed customer-facing sportswear and matchday jersey store for **ASFA Design** (Dhaka, Bangladesh).
+Premium light-themed responsive website for **ASFA Design**, Dhaka's premier football jersey, apparel manufacturing, and custom sublimation teamwear workshop.
 
-## 🚀 Tech Stack
+## Features
 
-- **Frontend**: Next.js 15+ (App Router), TypeScript, TailwindCSS, Sonner, Lucide React
-- **Backend**: Fastify 5+, TypeScript, Mongoose ODM, `@fastify/swagger`
-- **Database**: MongoDB Atlas (`asfa_design` collection)
-- **API Port**: `5000` (`http://localhost:5000`)
-- **Frontend Port**: `3000` (`http://localhost:3000`)
+- **Next.js 15 App Router** with full TypeScript support and React 19.
+- **Tailwind CSS v4** styling with PostCSS, smooth animations, and clean luxury typography.
+- **Rich Product Catalog** with full kit sets, detailed specifications, size selectors, and image galleries.
+- **Direct WhatsApp & Online Order Flow** with free player name and squad number customization.
+- **Customer Reviews & Ratings** with verified client showcases.
+- **Matchday Gallery** categorized by Matchday Kits, Embroidery & Badges, Custom Teamwear, and Fabric & Craft.
 
----
-
-## 📦 Getting Started
-
-### 1. Install Dependencies
+## Quick Start
 
 ```bash
-bun install
-# or
+# Install dependencies
 npm install
-```
 
-### 2. Configure Environment Variables
-
-Copy `.env.example` to `.env`:
-
-```env
-PORT=5000
-HOST=0.0.0.0
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.prftcce.mongodb.net/asfa_design?retryWrites=true&w=majority&appName=Cluster0
-```
-
-### 3. Seed Database
-
-```bash
-bun run seed
-# or
-npm run seed
-```
-
-### 4. Run Development Server
-
-```bash
-bun run dev
-# or
+# Start development server
 npm run dev
-```
 
-- Web Application: [http://localhost:3000](http://localhost:3000)
-- Fastify Backend API: [http://localhost:5000](http://localhost:5000)
-- Swagger OpenAPI Docs: [http://localhost:5000/documentation](http://localhost:5000/documentation)
-- Store Admin Portal: [http://localhost:3000/admin](http://localhost:3000/admin)
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```

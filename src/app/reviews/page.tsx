@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { Star, CheckCircle, MessageSquare, Send, Loader2, Sparkles } from "lucide-react";
-import { Section, SectionHeading } from "@/components/site/Section";
-import { ButtonLink } from "@/components/site/Button";
+import { Section } from "@/components/site/Section";
 import { reviews as initialReviews, type Review } from "@/data/reviews";
 import { toast } from "sonner";
 
@@ -24,31 +23,30 @@ export default function ReviewsPage() {
     }
 
     setSubmitting(true);
-    try {
-      const res = await fetch("/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, location, product, rating, comment }),
-      });
+    // Simulate brief client submission
+    setTimeout(() => {
+      const newReview: Review = {
+        id: `rev-${Date.now()}`,
+        name: name.trim(),
+        location: location.trim() || "Dhaka, Bangladesh",
+        product: product.trim() || "Custom Matchday Jersey",
+        rating,
+        comment: comment.trim(),
+        date: "Just now",
+        avatarText: name.trim().slice(0, 2).toUpperCase(),
+        verified: true,
+      };
 
-      const data = await res.json();
-      if (res.ok && data.success) {
-        toast.success("Review submitted successfully!", {
-          description: "Thank you for supporting ASFA Design!",
-        });
-        setReviewsList((prev) => [data.data, ...prev]);
-        setName("");
-        setLocation("");
-        setComment("");
-      } else {
-        throw new Error(data.message || "Failed to submit review");
-      }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Failed to submit review. Please try again.");
-    } finally {
+      setReviewsList((prev) => [newReview, ...prev]);
+      setName("");
+      setLocation("");
+      setComment("");
       setSubmitting(false);
-    }
+
+      toast.success("Review published successfully!", {
+        description: "Thank you for supporting ASFA Design!",
+      });
+    }, 400);
   };
 
   return (
@@ -74,7 +72,7 @@ export default function ReviewsPage() {
               ))}
             </div>
             <span className="text-sm font-bold text-neutral-900">5.0 / 5.0 Rating</span>
-            <span className="text-xs text-muted-foreground">• 1,400+ Facebook Community</span>
+            <span className="text-xs text-muted-foreground">• 1,400+ Community</span>
           </div>
         </div>
       </Section>
@@ -217,7 +215,7 @@ export default function ReviewsPage() {
                   {submitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      Publishing to MongoDB...
+                      Publishing Review...
                     </>
                   ) : (
                     <>

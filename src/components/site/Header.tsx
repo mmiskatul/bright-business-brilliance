@@ -72,12 +72,6 @@ export function Header() {
 
         {/* Action Buttons */}
         <div className="hidden sm:flex items-center gap-3">
-          <Link
-            href="/admin"
-            className="text-xs font-semibold text-muted-foreground border border-border px-2.5 py-1.5 rounded-md hover:text-foreground hover:bg-muted transition-colors"
-          >
-            Admin
-          </Link>
           <a
             href={business.whatsappUrl}
             target="_blank"
@@ -135,15 +129,6 @@ export function Header() {
                 </li>
               );
             })}
-            <li className="pt-2 border-t border-border mt-2">
-              <Link
-                href="/admin"
-                onClick={() => setOpen(false)}
-                className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
-              >
-                Admin Control Dashboard
-              </Link>
-            </li>
           </ul>
 
           <div className="mt-4 flex flex-col gap-2 pt-2">

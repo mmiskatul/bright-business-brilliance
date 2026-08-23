@@ -16,7 +16,6 @@ import { ButtonLink } from "@/components/site/Button";
 import { business } from "@/data/site";
 import { products } from "@/data/products";
 import { reviews } from "@/data/reviews";
-import { galleryItems } from "@/data/gallery";
 
 const advantages = [
   {
@@ -197,9 +196,10 @@ export default function HomePage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featuredProducts.map((product) => (
-            <article
+            <Link
               key={product.slug}
-              className="group flex flex-col overflow-hidden rounded-xl border border-border/80 bg-white shadow-soft transition-all duration-300 hover:shadow-lift hover:-translate-y-1"
+              href={`/products/${product.slug}`}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-white shadow-soft transition-all duration-300 hover:shadow-lift hover:-translate-y-1"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
                 <img
@@ -212,16 +212,23 @@ export default function HomePage() {
                     {product.badge}
                   </span>
                 )}
-                <span className="absolute top-3 right-3 rounded-md bg-emerald-700 px-2 py-0.5 text-xs font-bold text-white shadow-sm">
-                  {product.price}
-                </span>
+                <div className="absolute top-3 right-3 flex flex-col items-end">
+                  <span className="rounded-md bg-emerald-700 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
+                    {product.price}
+                  </span>
+                  {product.originalPrice && (
+                    <span className="text-[10px] font-semibold text-neutral-600 line-through bg-white/90 px-1 rounded mt-0.5 shadow-sm">
+                      {product.originalPrice}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="flex flex-1 flex-col p-6">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
                   {product.category}
                 </span>
-                <h3 className="mt-1.5 text-lg font-bold text-neutral-900 leading-snug">
+                <h3 className="mt-1.5 text-lg font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
                   {product.name}
                 </h3>
                 <p className="mt-2.5 flex-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
@@ -233,22 +240,19 @@ export default function HomePage() {
                     {product.sizes.map((s) => (
                       <span
                         key={s}
-                        className="rounded border border-border bg-neutral-50 px-1.5 py-0.5 text-[10px] font-medium text-neutral-600"
+                        className="rounded border border-border bg-neutral-50 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-700"
                       >
                         {s}
                       </span>
                     ))}
                   </div>
-                  <Link
-                    href={`/products/${product.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800"
-                  >
-                    Details
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 group-hover:text-emerald-800">
+                    View Details
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                  </Link>
+                  </span>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </Section>
@@ -325,50 +329,19 @@ export default function HomePage() {
               <ButtonLink href="/products" variant="primary">
                 Shop The Collection
               </ButtonLink>
-              <ButtonLink href="/gallery" variant="outline">
-                View Macro Details
+              <ButtonLink href="/offers" variant="outline">
+                View Seasonal Offers
               </ButtonLink>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* 05 Matchday Gallery Preview */}
+      {/* 05 Customer Reviews Preview */}
       <Section tone="alt" bordered>
         <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
-          <SectionHeading eyebrow="05 — Matchday Gallery" title="Fabric, Badges & Finished Kits" />
-          <Link
-            href="/gallery"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:underline"
-          >
-            View full gallery
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {galleryItems.slice(0, 4).map((item, i) => (
-            <figure
-              key={item.src + i}
-              className={`group overflow-hidden rounded-xl border border-border bg-white shadow-soft ${
-                i === 0 ? "col-span-2 row-span-2" : ""
-              }`}
-            >
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </figure>
-          ))}
-        </div>
-      </Section>
-
-      {/* 06 Customer Reviews Preview */}
-      <Section>
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
           <SectionHeading
-            eyebrow="06 — Customer Proof"
+            eyebrow="05 — Customer Proof"
             title="What Footballers & Fans Say in Dhaka"
             description="Verified reviews from tournament captains, kit collectors, and football supporters across Bangladesh."
           />

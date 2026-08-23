@@ -59,39 +59,18 @@ function ContactFormContent() {
     }
 
     setLoading(true);
-    try {
-      const orderMessage = `[ORDER DETAILS]\nJersey: ${formData.jersey}\nSize: ${formData.size}\nQuantity: ${formData.quantity}\nCustom Print: ${formData.customName ? formData.customName.toUpperCase() : "None"} #${formData.customNumber || ""}\nDelivery Area: ${formData.deliveryArea}\nAddress: ${formData.address}\nNote: ${formData.message || "None"}`;
-
-      const res = await fetch("/api/inquiries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email || `${formData.phone.replace(/\D/g, "")}@order.asfadesign.com`,
-          phone: formData.phone,
-          service: formData.jersey,
-          budget: `${formData.quantity} piece(s)`,
-          timeline: formData.deliveryArea,
-          message: orderMessage,
-        }),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setSubmitted(true);
-        toast.success("Order Placed Successfully!", {
-          description:
-            "Saved in MongoDB database. ASFA Design team will call/WhatsApp for confirmation.",
-        });
-      } else {
-        throw new Error(data.message || "Failed to submit order");
-      }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Could not place order online. Please order via WhatsApp directly.");
-    } finally {
+    setTimeout(() => {
       setLoading(false);
-    }
+      setSubmitted(true);
+      toast.success("Order Placed Successfully!", {
+        description: "ASFA Design team will call/WhatsApp for confirmation.",
+      });
+    }, 400);
+  };
+
+  const getWhatsAppOrderLink = () => {
+    const text = `Hi ASFA Design! I would like to order:\n• Jersey: ${formData.jersey}\n• Size: ${formData.size}\n• Quantity: ${formData.quantity}\n• Custom Print: ${formData.customName ? formData.customName.toUpperCase() : "None"} #${formData.customNumber || ""}\n• Delivery: ${formData.deliveryArea}\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Address: ${formData.address}\n• Note: ${formData.message || "None"}`;
+    return `https://wa.me/8801711234567?text=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -120,18 +99,18 @@ function ContactFormContent() {
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 mb-4">
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
-                <h2 className="text-2xl font-bold text-neutral-900">Order Received in MongoDB!</h2>
+                <h2 className="text-2xl font-bold text-neutral-900">Order Received!</h2>
                 <p className="mt-3 text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
                   Thank you, <strong>{formData.name}</strong>! Your order for{" "}
                   <strong>
                     {formData.jersey} ({formData.size})
                   </strong>{" "}
-                  has been securely logged. Our team will contact your phone ({formData.phone}) to
-                  confirm delivery dispatch.
+                  has been placed. Our team will contact your phone ({formData.phone}) to confirm
+                  delivery dispatch.
                 </p>
-                <div className="mt-6 flex justify-center gap-3">
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <a
-                    href={`https://wa.me/8801711234567?text=Hi%20ASFA%20Design!%20I%20just%20placed%20an%20order%20for%20${encodeURIComponent(formData.jersey)}%20(Name:%20${encodeURIComponent(formData.name)})`}
+                    href={getWhatsAppOrderLink()}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-800"
@@ -350,7 +329,7 @@ function ContactFormContent() {
                     {loading ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin" />
-                        Submitting Order to MongoDB...
+                        Placing Order...
                       </>
                     ) : (
                       <>

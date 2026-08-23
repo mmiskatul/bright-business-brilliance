@@ -175,17 +175,12 @@ export function Footer() {
         <div className="container-page flex flex-col gap-3 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 {business.name} — Finest Apparel Manufacturing. Dhaka, Bangladesh.</p>
           <div className="flex gap-5">
-            <Link href="/admin" className="hover:text-emerald-700 font-medium">
-              Admin Portal
+            <Link href="/products" className="hover:text-emerald-700 font-medium">
+              Jerseys & Kits
             </Link>
-            <a
-              href="http://localhost:5000/documentation"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-emerald-700"
-            >
-              Fastify Swagger API
-            </a>
+            <Link href="/contact" className="hover:text-emerald-700 font-medium">
+              Direct Order
+            </Link>
           </div>
         </div>
       </div>
