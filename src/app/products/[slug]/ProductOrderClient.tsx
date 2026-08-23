@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle, ShoppingBag, CheckCircle, Sparkles } from "lucide-react";
-import { type Product, business } from "@/data/site";
+import { ShoppingBag, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
+import { type Product } from "@/data/site";
+import Link from "next/link";
 
 export function ProductOrderClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || "M");
@@ -10,15 +11,14 @@ export function ProductOrderClient({ product }: { product: Product }) {
   const [customNumber, setCustomNumber] = useState("");
   const [includePatches, setIncludePatches] = useState(true);
 
-  const getWhatsAppMessage = () => {
-    let msg = `Hi ASFA Design! I want to order:\n- Jersey: ${product.name}\n- Price: ${product.price}\n- Size: ${selectedSize}`;
-    if (customName.trim() || customNumber.trim()) {
-      msg += `\n- Custom Print: ${customName.trim().toUpperCase()} #${customNumber.trim()}`;
-    }
-    if (includePatches) {
-      msg += `\n- Sleeve Badges: Yes (Included)`;
-    }
-    return encodeURIComponent(msg);
+  const getOrderUrl = () => {
+    const params = new URLSearchParams();
+    params.set("jersey", product.name);
+    params.set("size", selectedSize);
+    if (customName.trim()) params.set("name", customName.trim().toUpperCase());
+    if (customNumber.trim()) params.set("number", customNumber.trim());
+    if (includePatches) params.set("patches", "yes");
+    return `/contact?${params.toString()}`;
   };
 
   return (
@@ -29,7 +29,7 @@ export function ProductOrderClient({ product }: { product: Product }) {
           <label className="text-xs font-bold uppercase tracking-wider text-neutral-800">
             Select Size:
           </label>
-          <span className="text-[11px] text-muted-foreground">Standard Asian Athletic Fit</span>
+          <span className="text-[11px] text-muted-foreground">Standard Athletic Fit</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {product.sizes.map((size) => (
@@ -99,24 +99,18 @@ export function ProductOrderClient({ product }: { product: Product }) {
       </div>
 
       {/* 3. Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-2">
-        <a
-          href={`https://wa.me/8801711234567?text=${getWhatsAppMessage()}`}
-          target="_blank"
-          rel="noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 px-6 py-3.5 text-sm font-bold text-white shadow-soft hover:bg-emerald-800 transition-all hover:shadow-lift"
-        >
-          <MessageCircle className="h-4 w-4" />
-          Order on WhatsApp Instantly
-        </a>
-
-        <a
-          href={`/contact?jersey=${encodeURIComponent(product.name)}&size=${selectedSize}&name=${encodeURIComponent(customName)}&number=${customNumber}`}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-300 bg-white px-5 py-3.5 text-sm font-semibold text-neutral-800 hover:bg-neutral-50 transition-colors shadow-sm"
+      <div className="pt-2">
+        <Link
+          href={getOrderUrl()}
+          className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 px-6 py-3.5 text-sm font-bold text-white shadow-soft hover:bg-emerald-800 transition-all hover:shadow-lift"
         >
           <ShoppingBag className="h-4 w-4" />
-          Submit Web Order
-        </a>
+          Proceed to Order ({product.price})
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+        <p className="mt-2 text-center text-[11px] text-muted-foreground">
+          Cash on delivery & home delivery available nationwide across 64 districts
+        </p>
       </div>
     </div>
   );

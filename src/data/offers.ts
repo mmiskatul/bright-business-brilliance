@@ -19,7 +19,7 @@ export const offers: Offer[] = [
     description:
       "Get authentic matchday name and number printing completely FREE with any Club or National Team kit purchase.",
     validUntil: "Ongoing this season",
-    terms: "Valid on all online and WhatsApp orders. 1 customization per jersey.",
+    terms: "Valid on all online web orders. 1 customization per jersey.",
   },
   {
     id: "off-2",
@@ -41,6 +41,6 @@ export const offers: Offer[] = [
     description:
       "Order any 2 jerseys (Club, National, or Retro) and enjoy 100% free home delivery across Dhaka and all 64 districts.",
     validUntil: "This Month Only",
-    terms: "Applies automatically at checkout or when ordering via WhatsApp.",
+    terms: "Applies automatically at online checkout.",
   },
 ];

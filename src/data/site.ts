@@ -13,8 +13,6 @@ export const business = {
   facebookHandle: "asfadesignbd",
   phone: "+880 1711-234567",
   phoneHref: "tel:+8801711234567",
-  whatsappUrl:
-    "https://wa.me/8801711234567?text=Hi%20ASFA%20Design,%20I%20am%20interested%20in%20ordering%20a%20jersey",
   email: "orders@asfadesign.com",
   location: "House 14, Road 7, Dhanmondi, Dhaka, Bangladesh",
   shipping: "Nationwide delivery across Bangladesh within 48–72 hours",
@@ -22,7 +20,7 @@ export const business = {
     { days: "Saturday – Thursday", time: "10:00 – 21:00" },
     { days: "Friday", time: "15:00 – 21:00" },
   ],
-  responseTime: "Inquiries & WhatsApp orders are answered within minutes.",
+  responseTime: "Online orders and inquiries are processed immediately.",
 } as const;
 
 export interface Product {

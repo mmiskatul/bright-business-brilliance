@@ -72,15 +72,12 @@ export function Header() {
 
         {/* Action Buttons */}
         <div className="hidden sm:flex items-center gap-3">
-          <a
-            href={business.whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-100/70 hover:bg-emerald-200/80 px-3 py-2 rounded-md transition-colors"
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 px-3.5 py-2 rounded-md transition-colors"
           >
-            <MessageCircle className="h-4 w-4 text-emerald-700" />
-            WhatsApp
-          </a>
+            Catalog
+          </Link>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white shadow-soft transition-all hover:bg-emerald-800 hover:shadow-lift"
@@ -132,14 +129,13 @@ export function Header() {
           </ul>
 
           <div className="mt-4 flex flex-col gap-2 pt-2">
-            <a
-              href={business.whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-center gap-2 rounded-md bg-emerald-100 px-4 py-2.5 text-center text-sm font-medium text-emerald-900"
+            <Link
+              href="/products"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center gap-2 rounded-md bg-neutral-100 px-4 py-2.5 text-center text-sm font-medium text-neutral-900"
             >
-              <MessageCircle className="h-4 w-4" /> Quick WhatsApp Order
-            </a>
+              <ShoppingBag className="h-4 w-4" /> Explore Jersey Catalog
+            </Link>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}

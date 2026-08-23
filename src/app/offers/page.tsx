@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Tag, Copy, Check, Sparkles, MessageCircle, ArrowRight, Truck, Users } from "lucide-react";
+import Link from "next/link";
+import { Tag, Copy, Check, Sparkles, ArrowRight, Truck, Users } from "lucide-react";
 import { Section, SectionHeading } from "@/components/site/Section";
 import { ButtonLink } from "@/components/site/Button";
 import { offers } from "@/data/offers";
@@ -93,15 +94,13 @@ export default function OffersPage() {
                 <p className="text-[11px] text-muted-foreground mb-4">
                   <strong>Terms:</strong> {offer.terms}
                 </p>
-                <a
-                  href={`https://wa.me/8801711234567?text=Hi%20ASFA%20Design,%20I%20want%20to%20claim%20offer%20code%20${offer.code}%20for%20my%20jersey%20order`}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href={`/contact?offer=${encodeURIComponent(offer.title)}&code=${offer.code}`}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 py-2.5 text-xs font-bold text-white hover:bg-emerald-800 transition-colors shadow-sm"
                 >
-                  <MessageCircle className="h-4 w-4" />
-                  Claim Deal on WhatsApp
-                </a>
+                  <Tag className="h-4 w-4" />
+                  Claim Deal Online
+                </Link>
               </div>
             </div>
           ))}

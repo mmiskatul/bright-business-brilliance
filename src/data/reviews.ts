@@ -31,7 +31,7 @@ export const reviews: Review[] = [
     date: "January 2026",
     product: "Argentina 3-Star World Champions Home",
     comment:
-      "Ordered customized Messi 10 printing with World Cup badges. The printing is crisp with sharp edges and didn't peel after multiple washes. Excellent customer service over WhatsApp!",
+      "Ordered customized Messi 10 printing with World Cup badges. The printing is crisp with sharp edges and didn't peel after multiple washes. Excellent direct customer service and fast delivery!",
     avatarText: "SH",
     verified: true,
   },

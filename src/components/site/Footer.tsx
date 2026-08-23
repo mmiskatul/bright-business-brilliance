@@ -57,11 +57,11 @@ export function Footer() {
 
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-800">
-              <MessageCircle className="h-5 w-5" />
+              <Phone className="h-5 w-5" />
             </span>
             <div>
-              <p className="text-sm font-semibold">Instant Support</p>
-              <p className="text-xs text-muted-foreground">Live WhatsApp sizing & order help</p>
+              <p className="text-sm font-semibold">Direct Order Support</p>
+              <p className="text-xs text-muted-foreground">Call hotline & fast online checkout</p>
             </div>
           </div>
         </div>
@@ -90,13 +90,11 @@ export function Footer() {
               Facebook Page
             </a>
             <a
-              href={business.whatsappUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-white px-3 py-1.5 text-xs font-semibold text-emerald-800 transition-colors hover:bg-emerald-50"
+              href={business.phoneHref}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-white px-3 py-1.5 text-xs font-semibold text-neutral-800 transition-colors hover:text-emerald-700"
             >
-              <MessageCircle className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
-              WhatsApp
+              <Phone className="h-3.5 w-3.5 text-emerald-700" aria-hidden="true" />
+              Call Hotline
             </a>
           </div>
         </div>

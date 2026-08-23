@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, ShoppingBag, MessageCircle, Filter, Check } from "lucide-react";
+import { ArrowRight, Search, ShoppingBag, Filter, Check } from "lucide-react";
 import { Section, SectionHeading } from "@/components/site/Section";
 import { ButtonLink } from "@/components/site/Button";
 import { products } from "@/data/products";
@@ -91,8 +91,9 @@ export default function ProductsPage() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
-              <article
+              <Link
                 key={product.slug}
+                href={`/products/${product.slug}`}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-white shadow-soft transition-all duration-300 hover:shadow-lift hover:-translate-y-1"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
@@ -122,7 +123,7 @@ export default function ProductsPage() {
                   <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
                     {product.category}
                   </span>
-                  <h2 className="mt-1.5 text-lg font-bold text-neutral-900 leading-snug">
+                  <h2 className="mt-1.5 text-lg font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
                     {product.name}
                   </h2>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground flex-1">
@@ -144,27 +145,16 @@ export default function ProductsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-800 transition-colors"
-                      >
-                        View & Order
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                      <a
-                        href={`https://wa.me/8801711234567?text=Hi%20ASFA%20Design,%20I%20would%20like%20to%20order%20${encodeURIComponent(product.name)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 p-2.5 text-emerald-700 hover:bg-emerald-100 transition-colors"
-                        title="Order on WhatsApp"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                      </a>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-sm font-bold text-neutral-900">{product.price}</span>
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 group-hover:text-emerald-800">
+                        View Details & Order
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                      </span>
                     </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}
@@ -184,15 +174,9 @@ export default function ProductsPage() {
             <ButtonLink href="/contact" variant="primary">
               Request Custom Squad Quote
             </ButtonLink>
-            <a
-              href={business.whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-emerald-300 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-800 hover:bg-emerald-50 transition-colors"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Discuss on WhatsApp
-            </a>
+            <ButtonLink href="/about" variant="outline">
+              Learn About Manufacturing
+            </ButtonLink>
           </div>
         </div>
       </section>

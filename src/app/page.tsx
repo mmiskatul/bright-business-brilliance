@@ -349,21 +349,16 @@ export default function HomePage() {
             Ready to order your squad's new kit?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-neutral-600">
-            Send us a quick message on WhatsApp with your desired club, size, and custom player
-            name. We reply within minutes with mockups and instant confirmation.
+            Select your desired club or national team kit, customize your name & number, and order
+            online with fast nationwide delivery across Bangladesh.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3.5">
-            <a
-              href={business.whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-6 py-3 text-sm font-semibold text-white shadow-soft hover:bg-emerald-800 transition-all hover:shadow-lift"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Chat on WhatsApp Now
-            </a>
+            <ButtonLink href="/products" variant="primary">
+              Shop Jersey Catalog
+              <ArrowRight className="h-4 w-4" />
+            </ButtonLink>
             <ButtonLink href="/contact" variant="outline">
-              Submit Online Order
+              Submit Custom Order
             </ButtonLink>
           </div>
           <p className="mt-5 text-xs text-muted-foreground">

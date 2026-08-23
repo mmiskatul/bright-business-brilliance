@@ -9,12 +9,13 @@ import {
   Mail,
   MapPin,
   Clock,
-  MessageCircle,
   Truck,
   Loader2,
   ShoppingBag,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import { Section } from "@/components/site/Section";
 import { business } from "@/data/site";
 import { products } from "@/data/products";
@@ -63,14 +64,9 @@ function ContactFormContent() {
       setLoading(false);
       setSubmitted(true);
       toast.success("Order Placed Successfully!", {
-        description: "ASFA Design team will call/WhatsApp for confirmation.",
+        description: "ASFA Design team will call your phone for confirmation.",
       });
     }, 400);
-  };
-
-  const getWhatsAppOrderLink = () => {
-    const text = `Hi ASFA Design! I would like to order:\n• Jersey: ${formData.jersey}\n• Size: ${formData.size}\n• Quantity: ${formData.quantity}\n• Custom Print: ${formData.customName ? formData.customName.toUpperCase() : "None"} #${formData.customNumber || ""}\n• Delivery: ${formData.deliveryArea}\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Address: ${formData.address}\n• Note: ${formData.message || "None"}`;
-    return `https://wa.me/8801711234567?text=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -84,8 +80,8 @@ function ContactFormContent() {
             Order Your Jersey or Contact Our Dhaka Studio
           </h1>
           <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            Submit your order details below or chat with us on WhatsApp for instant sizing
-            assistance, custom name printing, and same-day delivery dispatch.
+            Submit your order details below with your sizing, customized name & number, and delivery
+            address. We dispatch nationwide with cash on delivery across Bangladesh.
           </p>
         </div>
       </Section>
@@ -100,24 +96,41 @@ function ContactFormContent() {
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
                 <h2 className="text-2xl font-bold text-neutral-900">Order Received!</h2>
-                <p className="mt-3 text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong>{formData.name}</strong>! Your order for{" "}
-                  <strong>
-                    {formData.jersey} ({formData.size})
-                  </strong>{" "}
-                  has been placed. Our team will contact your phone ({formData.phone}) to confirm
-                  delivery dispatch.
+                <div className="mt-4 max-w-md mx-auto rounded-xl border border-emerald-200 bg-emerald-50/60 p-4 text-left text-xs space-y-1.5 text-neutral-800">
+                  <p>
+                    <strong>Customer:</strong> {formData.name}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong> {formData.phone}
+                  </p>
+                  <p>
+                    <strong>Jersey:</strong> {formData.jersey} ({formData.size})
+                  </p>
+                  {formData.customName && (
+                    <p>
+                      <strong>Custom Print:</strong> {formData.customName.toUpperCase()} #
+                      {formData.customNumber}
+                    </p>
+                  )}
+                  <p>
+                    <strong>Delivery Area:</strong> {formData.deliveryArea}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {formData.address}
+                  </p>
+                </div>
+                <p className="mt-4 text-xs text-neutral-600 max-w-md mx-auto leading-relaxed">
+                  Our dispatch manager will call your phone shortly to confirm your order and
+                  provide your parcel tracking ID.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
-                  <a
-                    href={getWhatsAppOrderLink()}
-                    target="_blank"
-                    rel="noreferrer"
+                  <Link
+                    href="/products"
                     className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-800"
                   >
-                    <MessageCircle className="h-4 w-4" />
-                    Confirm on WhatsApp
-                  </a>
+                    <ShoppingBag className="h-4 w-4" />
+                    Browse More Jerseys
+                  </Link>
                   <button
                     type="button"
                     onClick={() => {
@@ -168,7 +181,7 @@ function ContactFormContent() {
 
                   <div>
                     <label className="block text-xs font-bold text-neutral-800 mb-1">
-                      Contact Phone / WhatsApp *
+                      Contact Phone Number *
                     </label>
                     <input
                       type="tel"
@@ -320,11 +333,11 @@ function ContactFormContent() {
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center gap-3">
+                <div>
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3.5 px-8 text-xs font-bold text-white shadow-soft hover:bg-emerald-800 transition-all disabled:opacity-50"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3.5 px-8 text-sm font-bold text-white shadow-soft hover:bg-emerald-800 transition-all disabled:opacity-50"
                   >
                     {loading ? (
                       <>
@@ -334,20 +347,10 @@ function ContactFormContent() {
                     ) : (
                       <>
                         <Send className="h-4 w-4" />
-                        Place Order (Cash on Delivery)
+                        Submit Order (Cash on Delivery)
                       </>
                     )}
                   </button>
-
-                  <a
-                    href={business.whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-300 bg-emerald-50 px-6 py-3.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-colors"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    WhatsApp Order
-                  </a>
                 </div>
               </form>
             )}
@@ -358,7 +361,7 @@ function ContactFormContent() {
             <div className="rounded-2xl border border-border bg-white p-7 shadow-soft">
               <h2 className="text-lg font-bold text-neutral-900">ASFA Design Studio</h2>
               <p className="text-xs text-muted-foreground mt-0.5">
-                Visit our Dhanmondi showroom or get direct assistance.
+                Visit our Dhanmondi showroom or call for direct assistance.
               </p>
 
               <ul className="mt-6 space-y-4 text-xs">
@@ -372,7 +375,7 @@ function ContactFormContent() {
                 <li className="flex items-start gap-3">
                   <Phone className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold text-neutral-900">Hotline & WhatsApp</p>
+                    <p className="font-bold text-neutral-900">Direct Hotline</p>
                     <a
                       href={business.phoneHref}
                       className="text-emerald-700 font-bold hover:underline"
