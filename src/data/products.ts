@@ -31,7 +31,6 @@ export const products: Product[] = [
       { label: "Jersey Front View", url: "/assets/asfa-falcon-front.png" },
       { label: "Full Kit Set (Shorts Included)", url: "/assets/asfa-falcon-fullkit.png" },
       { label: "Side Flank Profile", url: "/assets/asfa-falcon-side.png" },
-      { label: "Fabric & Stitching Detail", url: "/assets/jersey-fabric.jpg" },
     ],
     imageAlt: "ASFA Design custom Falcon Jr Miami splash sky blue and pink football kit set",
     featured: true,
@@ -69,7 +68,6 @@ export const products: Product[] = [
         label: "Trophy Artwork Macro Detail",
         url: "/assets/asfa-argentina-messi-tribute-detail.png",
       },
-      { label: "Embroidered 3-Star Badge", url: "/assets/jersey-argentina.jpg" },
     ],
     imageAlt:
       "ASFA Design custom Argentina 3-star tribute polo jersey with Messi World Cup trophy back art",
