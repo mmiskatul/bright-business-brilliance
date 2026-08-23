@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b border-neutral-200/80 bg-white/98 backdrop-blur-md transition-all duration-200 ${
+      className={`sticky top-0 z-40 border-b border-neutral-200 bg-white/98 backdrop-blur-md transition-all duration-200 ${
         scrolled ? "shadow-xs border-neutral-300" : ""
       }`}
     >
@@ -44,18 +44,27 @@ export function Header() {
         </Link>
 
         {/* Center: Desktop Navigation */}
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-7 lg:gap-9 md:flex">
           {nav.map((item) => {
-            const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+            const isActive =
+              item.to === "/"
+                ? pathname === "/"
+                : pathname === item.to || pathname.startsWith(item.to + "/");
+
             return (
               <Link
                 key={item.to}
                 href={item.to}
-                className={`relative py-1 text-xs font-mono font-medium transition-colors hover:text-neutral-900 ${
-                  isActive ? "text-neutral-900 font-bold" : "text-neutral-600"
+                className={`relative py-1.5 text-xs sm:text-[13px] font-mono tracking-wider uppercase transition-colors duration-150 ${
+                  isActive
+                    ? "font-black text-[#047857]"
+                    : "font-bold text-neutral-600 hover:text-neutral-900"
                 }`}
               >
                 {item.label}
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-[#047857]" />
+                )}
               </Link>
             );
           })}
@@ -70,7 +79,7 @@ export function Header() {
             aria-label="Open Equipment Cart"
           >
             <ShoppingBag className="h-5 w-5 text-neutral-900" strokeWidth={2} />
-            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-black text-white shadow-xs">
+            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#047857] text-[9px] font-black text-white shadow-xs">
               {mounted ? totalCount : 0}
             </span>
           </button>
@@ -78,7 +87,7 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 text-neutral-800 md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 text-neutral-800 md:hidden cursor-pointer"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -98,16 +107,20 @@ export function Header() {
         >
           <ul className="flex flex-col space-y-1">
             {nav.map((item) => {
-              const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+              const isActive =
+                item.to === "/"
+                  ? pathname === "/"
+                  : pathname === item.to || pathname.startsWith(item.to + "/");
+
               return (
                 <li key={item.to}>
                   <Link
                     href={item.to}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-md px-3 py-2 text-xs font-mono font-medium transition-colors ${
+                    className={`block rounded-md px-3.5 py-2.5 text-xs font-mono tracking-wider uppercase transition-colors ${
                       isActive
-                        ? "bg-neutral-100 text-neutral-900 font-bold"
-                        : "text-neutral-700 hover:bg-neutral-50"
+                        ? "bg-emerald-50 text-[#047857] font-black border-l-4 border-[#047857]"
+                        : "font-bold text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
                     }`}
                   >
                     {item.label}
@@ -124,16 +137,16 @@ export function Header() {
                 setOpen(false);
                 openCart();
               }}
-              className="w-full flex items-center justify-center gap-2 rounded-md bg-neutral-100 px-4 py-2.5 text-center text-xs font-bold text-neutral-900 uppercase tracking-wider"
+              className="w-full flex items-center justify-center gap-2 rounded-md bg-neutral-100 px-4 py-2.5 text-center text-xs font-bold text-neutral-900 uppercase tracking-wider font-mono cursor-pointer"
             >
               <ShoppingBag className="h-4 w-4" /> View Cart ({totalCount})
             </button>
             <Link
-              href="/contact"
+              href="/custom"
               onClick={() => setOpen(false)}
-              className="block rounded-md bg-emerald-700 px-4 py-2.5 text-center text-xs font-bold text-white shadow-xs uppercase tracking-wider"
+              className="block rounded-md bg-[#047857] hover:bg-[#065f46] px-4 py-2.5 text-center text-xs font-bold text-white shadow-xs uppercase tracking-wider font-mono transition-colors"
             >
-              Secure Checkout
+              Custom Squad Quote
             </Link>
           </div>
         </nav>

@@ -9,31 +9,39 @@ import { useCart } from "@/context/CartContext";
 export function ProductOrderClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || "M");
   const [quantity, setQuantity] = useState<number>(1);
-  const { addItem, openCart } = useCart();
+  const { addItem, buySingleItem, closeCart } = useCart();
   const router = useRouter();
 
   const priceNum = parseInt(product.price.replace(/[^\d]/g, ""), 10) || 1500;
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
+    addItem(
+      {
         slug: product.slug,
         name: product.name,
         price: priceNum,
         priceFormatted: product.price,
         size: selectedSize,
         image: product.image,
-      });
-    }
+      },
+      quantity,
+    );
   };
 
   const handleBuyNow = () => {
-    handleAddToCart();
-    const params = new URLSearchParams();
-    params.set("jersey", product.name);
-    params.set("size", selectedSize);
-    params.set("quantity", quantity.toString());
-    router.push(`/contact?${params.toString()}`);
+    buySingleItem(
+      {
+        slug: product.slug,
+        name: product.name,
+        price: priceNum,
+        priceFormatted: product.price,
+        size: selectedSize,
+        image: product.image,
+      },
+      quantity,
+    );
+    closeCart();
+    router.push("/checkout");
   };
 
   return (

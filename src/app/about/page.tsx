@@ -163,7 +163,7 @@ export default function AboutPage() {
               <ButtonLink href="/products" variant="primary">
                 View Available Jerseys
               </ButtonLink>
-              <ButtonLink href="/contact" variant="outline">
+              <ButtonLink href="/custom" variant="outline">
                 Order Custom Batch
               </ButtonLink>
             </div>

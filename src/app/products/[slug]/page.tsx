@@ -6,6 +6,7 @@ import { business } from "@/data/site";
 import { getProduct, products } from "@/data/products";
 import { ProductOrderClient } from "./ProductOrderClient";
 import { ProductGalleryClient } from "./ProductGalleryClient";
+import { ProductCard } from "@/components/site/ProductCard";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -43,7 +44,14 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+  // Fetch relevant related products from same category first, then fill with other kits
+  const sameCategory = products.filter(
+    (p) => p.category === product.category && p.slug !== product.slug,
+  );
+  const otherProducts = products.filter(
+    (p) => p.category !== product.category && p.slug !== product.slug,
+  );
+  const related = [...sameCategory, ...otherProducts].slice(0, 3);
 
   return (
     <div className="bg-white text-neutral-900">
@@ -212,60 +220,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/products/${p.slug}`}
-                className="group flex flex-col overflow-hidden border border-neutral-300 bg-white transition-colors duration-200 hover:border-neutral-400"
-              >
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-3">
-                  <img
-                    src={p.image}
-                    alt={p.imageAlt}
-                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                  />
-                  {p.badge && (
-                    <span className="absolute top-2.5 left-2.5 border border-neutral-300 bg-white/95 px-2 py-0.5 text-[9px] font-mono font-bold text-neutral-800 shadow-2xs">
-                      {p.badge}
-                    </span>
-                  )}
-                  <span className="absolute top-2.5 right-2.5 rounded-xs bg-emerald-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-2xs">
-                    {p.price}
-                  </span>
-                </div>
-
-                {/* Body */}
-                <div className="flex flex-1 flex-col p-4 sm:p-5">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700">
-                    {p.category}
-                  </span>
-
-                  <h3 className="mt-1 text-sm font-bold text-neutral-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                    {p.name}
-                  </h3>
-
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-neutral-600 line-clamp-2">
-                    {p.summary}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3 text-[11px] font-mono">
-                    <div className="flex gap-1">
-                      {["S", "M", "L"].map((s) => (
-                        <span
-                          key={s}
-                          className="flex h-5 w-5 items-center justify-center border border-neutral-300 bg-neutral-50 text-[9px] font-bold text-neutral-800"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 group-hover:text-emerald-800 font-mono">
-                      View Details
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard key={p.slug} product={p} />
             ))}
           </div>
         </div>
