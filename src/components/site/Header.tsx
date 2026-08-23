@@ -21,58 +21,59 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-neutral-200/80 bg-white/95 backdrop-blur-md transition-all duration-200 ${
+      className={`sticky top-0 z-50 border-b border-neutral-200/80 bg-white/98 backdrop-blur-md transition-all duration-200 ${
         scrolled ? "shadow-xs border-neutral-300" : ""
       }`}
     >
-      <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
-        {/* Left: Logo */}
+      <div className="container-page flex h-16 items-center justify-between gap-4 md:h-18">
+        {/* Left: Brand Logo */}
         <Link
           href="/"
           className="flex items-center gap-2.5 group"
           aria-label={`${business.name} — home`}
           onClick={() => setOpen(false)}
         >
-          <Logo className="h-7 w-8 transition-transform group-hover:scale-105" />
-          <span className="font-display text-base sm:text-lg font-black tracking-tight text-neutral-900 uppercase">
+          <Logo className="h-6 w-7 transition-transform group-hover:scale-105" />
+          <span className="font-display text-sm sm:text-base font-black tracking-wider text-neutral-900 uppercase">
             {business.name}
           </span>
         </Link>
 
-        {/* Center: Desktop navigation */}
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+        {/* Center: Desktop Navigation */}
+        <nav aria-label="Main" className="hidden items-center gap-7 md:flex">
           {nav.map((item) => {
             const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
             return (
               <Link
                 key={item.to}
                 href={item.to}
-                className={`text-xs font-bold uppercase tracking-wider transition-colors hover:text-emerald-700 ${
-                  isActive
-                    ? "text-emerald-700 underline underline-offset-8 decoration-2 decoration-emerald-600"
-                    : "text-neutral-600"
+                className={`relative py-1 text-[11px] font-bold uppercase tracking-wider transition-colors hover:text-neutral-900 ${
+                  isActive ? "text-emerald-700 font-extrabold" : "text-neutral-500"
                 }`}
               >
                 {item.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-emerald-600" />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right: Cart / Order Bag */}
-        <div className="flex items-center gap-3">
+        {/* Right: Cart / Order Action */}
+        <div className="flex items-center gap-2">
           <Link
             href="/contact"
-            className="relative inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-neutral-100 transition-colors text-neutral-800"
+            className="relative inline-flex items-center justify-center h-9 w-9 rounded-full hover:bg-neutral-100 transition-colors text-neutral-800"
             aria-label="Order Cart"
           >
-            <ShoppingBag className="h-5 w-5 text-neutral-800" />
-            <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-700 text-[10px] font-bold text-white shadow-xs">
+            <ShoppingBag className="h-5 w-5 text-neutral-900" strokeWidth={2} />
+            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-black text-white shadow-xs">
               0
             </span>
           </Link>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu button */}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 text-neutral-800 md:hidden"
@@ -86,12 +87,12 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile navigation */}
+      {/* Mobile navigation panel */}
       {open && (
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="border-t border-neutral-200 bg-white px-5 py-5 md:hidden animate-in fade-in slide-in-from-top-2 shadow-lg"
+          className="border-t border-neutral-200 bg-white px-5 py-4 md:hidden animate-in fade-in slide-in-from-top-2 shadow-lg"
         >
           <ul className="flex flex-col space-y-1">
             {nav.map((item) => {
@@ -101,7 +102,7 @@ export function Header() {
                   <Link
                     href={item.to}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-md px-3 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                    className={`block rounded-md px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                       isActive
                         ? "bg-emerald-50 text-emerald-800 font-bold"
                         : "text-neutral-700 hover:bg-neutral-100"
@@ -114,11 +115,11 @@ export function Header() {
             })}
           </ul>
 
-          <div className="mt-4 flex flex-col gap-2 pt-2 border-t border-neutral-100">
+          <div className="mt-3 pt-3 border-t border-neutral-100">
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="block rounded-lg bg-emerald-700 px-4 py-2.5 text-center text-xs font-bold text-white shadow-sm"
+              className="block rounded-md bg-emerald-700 px-4 py-2.5 text-center text-xs font-bold text-white shadow-xs uppercase tracking-wider"
             >
               Order & Teamwear Inquiry
             </Link>

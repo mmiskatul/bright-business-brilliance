@@ -1,32 +1,35 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
-import { business } from "@/data/site";
+import { ArrowUpRight } from "lucide-react";
 import { products } from "@/data/products";
 
 export default function HomePage() {
-  const popularProducts = products.slice(0, 2);
-  const bestSellers = [products[1] || products[0], products[0], products[2] || products[0]];
+  const popularKits = products.slice(0, 2);
+  const bestSellers = [
+    products[1] || products[0],
+    products[0],
+    products[7] || products[2] || products[0],
+  ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white text-neutral-900">
       {/* ─── Hero Section ────────────────────────────────────────── */}
-      <section className="border-b border-neutral-200/80 bg-white">
+      <section className="border-b border-neutral-200/90 bg-white">
         <div className="container-page grid items-center gap-10 py-12 lg:grid-cols-2 lg:gap-14 lg:py-16">
-          {/* Left Column */}
+          {/* Left Column: Hero Content */}
           <div>
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-50/80 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-800 mb-6">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+            {/* Top Pill Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/90 bg-emerald-50/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800 mb-6">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
               Dhaka Apparel | Sports Manufacturing
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl leading-[1.08] sm:text-5xl lg:text-[54px] font-black tracking-tight text-neutral-900">
+            <h1 className="text-4xl leading-[1.08] sm:text-5xl lg:text-[52px] font-black tracking-tight text-neutral-900">
               Wear your passion in authentic master quality.
             </h1>
 
-            {/* Description */}
-            <p className="mt-5 max-w-lg text-sm sm:text-base leading-relaxed text-neutral-600">
+            {/* Subtext */}
+            <p className="mt-5 max-w-lg text-xs sm:text-sm leading-relaxed text-neutral-600 font-normal">
               ASFA Design is a Dhaka-based sportswear and apparel manufacturing studio crafting
               premium matchday football jerseys, authentic club kits, national team shirts, and
               custom sublimation teamwear with precision embroidery and breathable fabrics.
@@ -36,21 +39,21 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3.5">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 rounded-md bg-emerald-800 px-5 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all hover:bg-emerald-900"
+                className="inline-flex items-center gap-1.5 rounded-md bg-[#047857] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-xs transition-all hover:bg-[#065f46]"
               >
                 Explore Jersey Catalog
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center rounded-md border border-neutral-300 bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-neutral-800 transition-colors hover:bg-neutral-50"
+                className="inline-flex items-center rounded-md border border-neutral-300 bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-neutral-800 transition-colors hover:bg-neutral-50 shadow-2xs"
               >
                 Custom Teamwear Quote
               </Link>
             </div>
 
-            {/* Metrics Row */}
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-neutral-200 pt-6">
+            {/* 3 Metrics Row */}
+            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-6 border-t border-neutral-200 pt-6">
               <div>
                 <dt className="text-[10px] uppercase font-bold tracking-wider text-neutral-500">
                   Fabric Grade
@@ -78,16 +81,16 @@ export default function HomePage() {
             </dl>
           </div>
 
-          {/* Right Column: Hero Image with Floating Banner */}
+          {/* Right Column: Hero Showcase Image */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 shadow-sm">
+            <div className="relative overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 shadow-xs">
               <img
                 src="/assets/jersey-matchday.jpg"
-                alt="ASFA Design premium matchday football kits on display rack"
+                alt="ASFA Design premium sports apparel matchday jerseys on studio rack"
                 className="w-full aspect-[4/3] object-cover"
               />
 
-              {/* Floating Bottom Banner */}
+              {/* Floating Bottom Card */}
               <div className="absolute bottom-3 left-3 right-3 rounded-lg bg-white/95 backdrop-blur-md p-3.5 border border-neutral-200/90 shadow-sm flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold text-neutral-900">
@@ -110,9 +113,9 @@ export default function HomePage() {
       </section>
 
       {/* ─── 01 Popular Matchday Jerseys ───────────────────────── */}
-      <section className="py-16 sm:py-20 border-b border-neutral-200/80 bg-white">
+      <section className="py-16 sm:py-20 border-b border-neutral-200/90 bg-white">
         <div className="container-page">
-          {/* Section Header */}
+          {/* Section Heading */}
           <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-1">
@@ -136,23 +139,23 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* 2-Column Featured Product Grid */}
+          {/* 2-Column Product Cards */}
           <div className="grid gap-6 sm:grid-cols-2">
-            {popularProducts.map((product) => (
+            {popularKits.map((product) => (
               <Link
                 key={product.slug}
                 href={`/products/${product.slug}`}
                 className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:border-neutral-300 hover:shadow-sm"
               >
-                {/* Product Image Box */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F4F5F4] flex items-center justify-center p-4">
+                {/* Image Box */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-4">
                   <img
                     src={product.image}
                     alt={product.imageAlt}
                     className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                   {product.badge && (
-                    <span className="absolute top-3 left-3 rounded-full bg-white/95 backdrop-blur px-2.5 py-0.5 text-[11px] font-bold text-neutral-800 shadow-xs border border-neutral-200">
+                    <span className="absolute top-3 left-3 rounded-full bg-white/95 backdrop-blur px-2.5 py-0.5 text-[10px] font-bold text-neutral-800 shadow-xs border border-neutral-200">
                       {product.badge}
                     </span>
                   )}
@@ -203,8 +206,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 02 Best Sellers (Gray Tone Section) ───────────────── */}
-      <section className="py-16 sm:py-20 bg-[#F8F9F7] border-b border-neutral-200/80">
+      {/* ─── 02 Top Selection / Best Sellers ───────────────────── */}
+      <section className="py-16 sm:py-20 bg-[#F8F9F7] border-b border-neutral-200/90">
         <div className="container-page">
           <div className="mb-10">
             <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-1">
@@ -227,13 +230,13 @@ export default function HomePage() {
                 className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:border-neutral-300 hover:shadow-sm"
               >
                 {/* Product Image Box */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F0F1F0] flex items-center justify-center p-4">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EFEFEF] flex items-center justify-center p-4">
                   <img
                     src={product.image}
                     alt={product.imageAlt}
                     className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
-                  <span className="absolute top-3 left-3 rounded-full bg-neutral-900 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wide">
+                  <span className="absolute top-3 left-3 rounded-full bg-neutral-900 px-2.5 py-0.5 text-[9px] font-bold text-white uppercase tracking-wide">
                     Best Seller
                   </span>
                   <span className="absolute top-3 right-3 rounded-md bg-emerald-600 px-2 py-0.5 text-xs font-bold text-white shadow-xs">
